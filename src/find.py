@@ -10,7 +10,7 @@ def pods_resource_limits_cpu_cores(kube_pod_container_resource_limits_cpu_cores_
     Finds the pods resource_limits_cpu_cores for a pod
     """
 
-    cpu_core_limit = -1.01
+    cpu_core_limit = 1.0000112233
 
     for row in kube_pod_container_resource_limits_cpu_cores_dict:
 
@@ -21,8 +21,8 @@ def pods_resource_limits_cpu_cores(kube_pod_container_resource_limits_cpu_cores_
             cpu_core_limit = float(row['value'][1])
             break
 
-    if cpu_core_limit == -1.01:
-        logger.error("Did not find a cpu limit for (setting default value to -1.01) - exported_namespace: "+exported_namespace+", pod: "+pod)
+    if cpu_core_limit == 1.0000112233:
+        logger.error("Did not find a cpu limit for (setting default value to 1.0000112233) - exported_namespace: "+exported_namespace+", pod: "+pod)
 
     return cpu_core_limit
 
@@ -34,7 +34,7 @@ def pods_resource_limits_memory_bytes(kube_pod_container_resource_limits_memory_
     Finds the pods kube_pod_container_resource_limits_memory_bytes for a pod
     """
 
-    memory_bytes_limit = -1000000001
+    memory_bytes_limit = 1.0000445566
 
     for row in kube_pod_container_resource_limits_memory_bytes_dict:
 
@@ -45,8 +45,8 @@ def pods_resource_limits_memory_bytes(kube_pod_container_resource_limits_memory_
             memory_bytes_limit = int(row['value'][1])
             break
 
-    if memory_bytes_limit == -1000000001:
-        logger.error("Did not find a memory limit for (setting default value to -1000000001) - exported_namespace: "+exported_namespace+", pod: "+pod)
+    if memory_bytes_limit == 1.0000445566:
+        logger.error("Did not find a memory limit for (setting default value to 1.0000445566) - exported_namespace: "+exported_namespace+", pod: "+pod)
 
     return memory_bytes_limit
 
