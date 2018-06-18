@@ -3,6 +3,7 @@ from src import prometheus_data
 from src import find
 from src import cost_assumptions
 from src import calculate_cost
+from time import sleep
 
 logger = logger_config.logger
 
@@ -25,6 +26,10 @@ def process(promehtheus_info_dict, start_time, end_time):
     # Getting the values
     kube_pod_info_dict = prometheus_data.get_kube_pod_info_dict(promehtheus_info_dict, start_time, end_time)
     kube_node_labels_dict = prometheus_data.get_kube_node_labels_dict(promehtheus_info_dict, start_time, end_time)
+    while kube_node_labels_dict == []:
+        sleep(1)
+        kube_node_labels_dict = prometheus_data.get_kube_node_labels_dict(promehtheus_info_dict, start_time, end_time)
+
     kube_pod_container_resource_limits_cpu_cores_dict = prometheus_data.get_kube_pod_container_resource_limits_cpu_cores_dict(promehtheus_info_dict, start_time, end_time)
     kube_pod_container_resource_limits_memory_bytes_dict = prometheus_data.get_kube_pod_container_resource_limits_memory_bytes_dict(promehtheus_info_dict, start_time, end_time)
 
@@ -69,11 +74,12 @@ def process(promehtheus_info_dict, start_time, end_time):
             # Get machine info dict
             machine_info_dict = find.machine_info_by_hostname(kube_node_labels_dict, node)
 
-            machine_spot_or_on_demand = None
-            if machine_info_dict['isSpot'] == "true":
-                machine_spot_or_on_demand = 'spot'
-            else:
-                machine_spot_or_on_demand = 'on_demand'
+            # machine_spot_or_on_demand = None
+            # if machine_info_dict['isSpot'] == "true":
+            #     machine_spot_or_on_demand = 'spot'
+            # else:
+            machine_spot_or_on_demand = 'on_demand'
+            machine_info_dict['instance_type'] = 'm4.xlarge'
 
             logger.info("cpu core limit: "+str(cpu_core_limit))
             logger.info("memory bytes limit: "+str(memory_bytes_limit))

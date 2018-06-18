@@ -57,16 +57,20 @@ def machine_info_by_hostname(kube_node_labels_dict, hostname):
 
     machine_info_dict = None
 
+    print("xxxx")
+    print(hostname)
+    print(kube_node_labels_dict)
+
     for row in kube_node_labels_dict:
-        if row['metric']['label_kubernetes_io_hostname'] == hostname:
+        if row['metric']['node'] == hostname:
             machine_info_dict = {}
             machine_info_dict['arch'] = row['metric']['label_beta_kubernetes_io_arch']
-            machine_info_dict['instance_type'] = row['metric']['label_k8s_info_instanceType']
+            machine_info_dict['instance_type'] = row['metric']['label_beta_kubernetes_io_instance_type']
             machine_info_dict['os'] = row['metric']['label_beta_kubernetes_io_os']
             machine_info_dict['region'] = row['metric']['label_failure_domain_beta_kubernetes_io_region']
             machine_info_dict['availability_zone'] = row['metric']['label_failure_domain_beta_kubernetes_io_zone']
-            machine_info_dict['hasPublicIP'] = row['metric']['label_k8s_info_hasPublicIP']
-            machine_info_dict['isSpot'] = row['metric']['label_k8s_info_isSpot']
+            #machine_info_dict['hasPublicIP'] = row['metric']['label_k8s_info_hasPublicIP']
+            machine_info_dict['isSpot'] = "false"
             machine_info_dict['kops_instancegroup'] = row['metric']['label_kops_k8s_io_instancegroup']
 
     return machine_info_dict

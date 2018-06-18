@@ -33,6 +33,14 @@ def get_kube_node_labels_dict(promehtheus_info_dict, start_time, end_time):
 
         kube_node_labels_dict = {}
 
+        print("XXXXXX")
+        print("prometheus_data.get_kube_node_labels_dict()")
+        print(results)
+
+        if results == []:
+            logger.error("No results from: get_kube_node_labels_dict")
+            #sys.exit()
+
         # for row in results:
         #     for key, value in row['metric'].items():
         #         print(key)
