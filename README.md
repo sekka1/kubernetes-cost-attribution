@@ -121,3 +121,11 @@ python3 pod_usage.py ${PROMETHEUS_HOST} ${PROMETHEUS_USER} ${PROMETHEUS_PASSWORD
 ## Running billing summary
 
 python3 billing_summary.py <csv file>
+
+# Pods where the CPU or Memory limits are not set
+Since this uses the pods cpu and memory limits for each container that is running it
+needs this value to calculate the cost.  If it does not find these values it will
+set one for it.
+
+CPU: 1.0000112233 cores
+Memory: 1.0000445566 MB
