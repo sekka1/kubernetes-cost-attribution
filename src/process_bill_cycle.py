@@ -3,6 +3,7 @@ from src import prometheus_data
 from src import find
 from src import cost_assumptions
 from src import calculate_cost
+from time import sleep
 
 logger = logger_config.logger
 
@@ -24,9 +25,22 @@ def process(promehtheus_info_dict, start_time, end_time):
 
     # Getting the values
     kube_pod_info_dict = prometheus_data.get_kube_pod_info_dict(promehtheus_info_dict, start_time, end_time)
+    while kube_pod_info_dict == []:
+        sleep(1)
+        kube_pod_info_dict = prometheus_data.get_kube_pod_info_dict(promehtheus_info_dict, start_time, end_time)
+
     kube_node_labels_dict = prometheus_data.get_kube_node_labels_dict(promehtheus_info_dict, start_time, end_time)
+    while kube_node_labels_dict == []:
+        sleep(1)
+        kube_node_labels_dict = prometheus_data.get_kube_node_labels_dict(promehtheus_info_dict, start_time, end_time)
+
     kube_pod_container_resource_limits_cpu_cores_dict = prometheus_data.get_kube_pod_container_resource_limits_cpu_cores_dict(promehtheus_info_dict, start_time, end_time)
+    while kube_pod_container_resource_limits_cpu_cores_dict == []:
+        kube_pod_container_resource_limits_cpu_cores_dict = prometheus_data.get_kube_pod_container_resource_limits_cpu_cores_dict(promehtheus_info_dict, start_time, end_time)
+
     kube_pod_container_resource_limits_memory_bytes_dict = prometheus_data.get_kube_pod_container_resource_limits_memory_bytes_dict(promehtheus_info_dict, start_time, end_time)
+    while kube_pod_container_resource_limits_memory_bytes_dict == []:
+        kube_pod_container_resource_limits_memory_bytes_dict = prometheus_data.get_kube_pod_container_resource_limits_memory_bytes_dict(promehtheus_info_dict, start_time, end_time)
 
     # Get cost assumption file(s)
     cost_assumptions_dict = cost_assumptions.get()
@@ -68,6 +82,10 @@ def process(promehtheus_info_dict, start_time, end_time):
 
             # Get machine info dict
             machine_info_dict = find.machine_info_by_hostname(kube_node_labels_dict, node)
+
+            print(node)
+            print(kube_node_labels_dict)
+            print(machine_info_dict)
 
             machine_spot_or_on_demand = None
             if machine_info_dict['isSpot'] == "true":

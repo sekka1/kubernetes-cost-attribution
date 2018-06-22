@@ -58,7 +58,8 @@ def machine_info_by_hostname(kube_node_labels_dict, hostname):
     machine_info_dict = None
 
     for row in kube_node_labels_dict:
-        if row['metric']['label_kubernetes_io_hostname'] == hostname:
+        if row['metric']['label_kubernetes_io_hostname'] == hostname.replace(".ec2.internal", "") or row['metric']['label_kubernetes_io_hostname'] == hostname:
+            print(row)
             machine_info_dict = {}
             machine_info_dict['arch'] = row['metric']['label_beta_kubernetes_io_arch']
             machine_info_dict['instance_type'] = row['metric']['label_k8s_info_instanceType']
