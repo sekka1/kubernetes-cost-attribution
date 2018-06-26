@@ -29,17 +29,25 @@ def process(promehtheus_info_dict, start_time, end_time):
         sleep(1)
         kube_pod_info_dict = prometheus_data.get_kube_pod_info_dict(promehtheus_info_dict, start_time, end_time)
 
+    sleep(1)
+
     kube_node_labels_dict = prometheus_data.get_kube_node_labels_dict(promehtheus_info_dict, start_time, end_time)
     while kube_node_labels_dict == []:
         sleep(1)
         kube_node_labels_dict = prometheus_data.get_kube_node_labels_dict(promehtheus_info_dict, start_time, end_time)
 
+    sleep(0.5)
+
     kube_pod_container_resource_limits_cpu_cores_dict = prometheus_data.get_kube_pod_container_resource_limits_cpu_cores_dict(promehtheus_info_dict, start_time, end_time)
     while kube_pod_container_resource_limits_cpu_cores_dict == []:
+        sleep(1)
         kube_pod_container_resource_limits_cpu_cores_dict = prometheus_data.get_kube_pod_container_resource_limits_cpu_cores_dict(promehtheus_info_dict, start_time, end_time)
+
+    sleep(0.5)
 
     kube_pod_container_resource_limits_memory_bytes_dict = prometheus_data.get_kube_pod_container_resource_limits_memory_bytes_dict(promehtheus_info_dict, start_time, end_time)
     while kube_pod_container_resource_limits_memory_bytes_dict == []:
+        sleep(1)
         kube_pod_container_resource_limits_memory_bytes_dict = prometheus_data.get_kube_pod_container_resource_limits_memory_bytes_dict(promehtheus_info_dict, start_time, end_time)
 
     # Get cost assumption file(s)
@@ -55,6 +63,10 @@ def process(promehtheus_info_dict, start_time, end_time):
     #
     for pod_row in kube_pod_info_dict:
 
+        print("xxxxxxxxxxxxxxxxxxxx")
+        print(pod_row)
+        print("xxxxxxxxxxxxxxxxxxxxx")
+
         exported_namespace = pod_row['metric']['exported_namespace']
         node = pod_row['metric']['node']
         pod = pod_row['metric']['pod']
@@ -62,7 +74,7 @@ def process(promehtheus_info_dict, start_time, end_time):
         # if (exported_namespace != 'kube-system' and
         #     exported_namespace != 'devops' and
         #     exported_namespace != 'infrastructure'):
-        if (exported_namespace != 'kube-system'):
+        if (exported_namespace != 'kube-system' and node != ''):
 
             logger.info("exported_namespace - "+exported_namespace)
             logger.info("node - "+node)
@@ -83,72 +95,80 @@ def process(promehtheus_info_dict, start_time, end_time):
             # Get machine info dict
             machine_info_dict = find.machine_info_by_hostname(kube_node_labels_dict, node)
 
+            print("============")
             print(node)
             print(kube_node_labels_dict)
             print(machine_info_dict)
+            print("============")
 
-            machine_spot_or_on_demand = None
-            if machine_info_dict['isSpot'] == "true":
-                machine_spot_or_on_demand = 'spot'
+            if machine_info_dict != None:
+
+                machine_spot_or_on_demand = None
+
+                if machine_info_dict['isSpot'] == "true":
+                    machine_spot_or_on_demand = 'spot'
+                else:
+                    machine_spot_or_on_demand = 'on_demand'
+
+                logger.info("cpu core limit: "+str(cpu_core_limit))
+                logger.info("memory bytes limit: "+str(memory_bytes_limit))
+
+                logger.info("machine_spot_or_on_demand: "+machine_spot_or_on_demand)
+                logger.info("machine type: "+machine_info_dict['instance_type'])
+                logger.info("machine hourly cost: "+str(cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['hourly_cost'][machine_spot_or_on_demand]))
+
+                logger.info("cost_assumptions_dict memory_percentage: "+str(cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['memory_percentage']))
+                logger.info("cost_assumptions_dict cpu percentage: "+str(cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['cpu_percentage']))
+
+                logger.info("machine mark up: "+str(cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['markup']))
+                logger.info("ec2 Machine total memory: "+str(cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['memory']))
+                logger.info("ec2 Machine total cpu: "+str(cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['cpu']))
+
+                current_pod_info = {
+                    'namespace': exported_namespace,
+                    'start_time': start_time,
+                    'end_time': end_time,
+                    'node': node,
+                    'pod': pod,
+                    'memory_bytes_limit': memory_bytes_limit,
+                    'cpu_core_limit': cpu_core_limit,
+                    'machine_spot_or_on_demand': machine_spot_or_on_demand,
+                    'instance_type': machine_info_dict['instance_type'],
+                    'instance_hourly_cost': cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['hourly_cost'][machine_spot_or_on_demand],
+                    'cost_assumptions_memory_percentage': cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['memory_percentage'],
+                    'cost_assumptions_cpu_percentage': cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['cpu_percentage'],
+                    'instance_markup': cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['markup'],
+                    'instance_total_memory': cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['memory'],
+                    'instance_total_cpu': cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['cpu']
+                }
+
+                cost_per_min_dict = calculate_cost.get_cost_per_min(
+                                        current_pod_info['cost_assumptions_memory_percentage'],
+                                        current_pod_info['cost_assumptions_cpu_percentage'],
+                                        current_pod_info['instance_hourly_cost'],
+                                        current_pod_info['instance_markup'],
+                                        current_pod_info['instance_total_memory'],
+                                        current_pod_info['instance_total_cpu'],
+                                        current_pod_info['memory_bytes_limit'],
+                                        current_pod_info['cpu_core_limit']
+                                        )
+
+                logger.info("cost_per_min_dict - total: "+str(cost_per_min_dict['total']))
+                logger.info("cost_per_min_dict - memory: "+str(cost_per_min_dict['memory']))
+                logger.info("cost_per_min_dict - cpu: "+str(cost_per_min_dict['cpu']))
+
+                # Adding the calculated cost into the dict
+                current_pod_info['cost_per_min_total'] = cost_per_min_dict['total']
+                current_pod_info['cost_per_min_memory'] = cost_per_min_dict['memory']
+                current_pod_info['cost_per_min_cpu'] = cost_per_min_dict['cpu']
+
+                current_billing_cycle_list.append(current_pod_info)
+
+                logger.info(current_pod_info)
+
+                logger.info("###################################################################")
+
             else:
-                machine_spot_or_on_demand = 'on_demand'
-
-            logger.info("cpu core limit: "+str(cpu_core_limit))
-            logger.info("memory bytes limit: "+str(memory_bytes_limit))
-
-            logger.info("machine_spot_or_on_demand: "+machine_spot_or_on_demand)
-            logger.info("machine type: "+machine_info_dict['instance_type'])
-            logger.info("machine hourly cost: "+str(cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['hourly_cost'][machine_spot_or_on_demand]))
-
-            logger.info("cost_assumptions_dict memory_percentage: "+str(cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['memory_percentage']))
-            logger.info("cost_assumptions_dict cpu percentage: "+str(cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['cpu_percentage']))
-
-            logger.info("machine mark up: "+str(cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['markup']))
-            logger.info("ec2 Machine total memory: "+str(cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['memory']))
-            logger.info("ec2 Machine total cpu: "+str(cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['cpu']))
-
-            current_pod_info = {
-                'namespace': exported_namespace,
-                'start_time': start_time,
-                'end_time': end_time,
-                'node': node,
-                'pod': pod,
-                'memory_bytes_limit': memory_bytes_limit,
-                'cpu_core_limit': cpu_core_limit,
-                'machine_spot_or_on_demand': machine_spot_or_on_demand,
-                'instance_type': machine_info_dict['instance_type'],
-                'instance_hourly_cost': cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['hourly_cost'][machine_spot_or_on_demand],
-                'cost_assumptions_memory_percentage': cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['memory_percentage'],
-                'cost_assumptions_cpu_percentage': cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['cpu_percentage'],
-                'instance_markup': cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['markup'],
-                'instance_total_memory': cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['memory'],
-                'instance_total_cpu': cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['cpu']
-            }
-
-            cost_per_min_dict = calculate_cost.get_cost_per_min(
-                                    current_pod_info['cost_assumptions_memory_percentage'],
-                                    current_pod_info['cost_assumptions_cpu_percentage'],
-                                    current_pod_info['instance_hourly_cost'],
-                                    current_pod_info['instance_markup'],
-                                    current_pod_info['instance_total_memory'],
-                                    current_pod_info['instance_total_cpu'],
-                                    current_pod_info['memory_bytes_limit'],
-                                    current_pod_info['cpu_core_limit']
-                                    )
-
-            logger.info("cost_per_min_dict - total: "+str(cost_per_min_dict['total']))
-            logger.info("cost_per_min_dict - memory: "+str(cost_per_min_dict['memory']))
-            logger.info("cost_per_min_dict - cpu: "+str(cost_per_min_dict['cpu']))
-
-            # Adding the calculated cost into the dict
-            current_pod_info['cost_per_min_total'] = cost_per_min_dict['total']
-            current_pod_info['cost_per_min_memory'] = cost_per_min_dict['memory']
-            current_pod_info['cost_per_min_cpu'] = cost_per_min_dict['cpu']
-
-            current_billing_cycle_list.append(current_pod_info)
-
-            logger.info(current_pod_info)
-
-            logger.info("###################################################################")
+                logger.warning("Did not find the node in "+node+" in find.machine_info_by_hostname")
 
     return current_billing_cycle_list
