@@ -40,3 +40,16 @@ for row in csv_output:
 # Output in a json format
 namespace_sums_json = json.dumps(namespace_sums_dict)
 print(namespace_sums_json)
+
+sorted_namespaces = sorted(namespace_sums_dict)
+
+print("=======================")
+
+# Print namespaces
+for key in sorted_namespaces:
+    print(key+",", end="")
+print("")
+
+# Print values
+for key in sorted_namespaces:
+    print(str(namespace_sums_dict[key]['total'])+",", end="")
