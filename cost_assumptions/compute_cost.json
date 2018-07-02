@@ -1125,7 +1125,185 @@
         "cpu_percentage": 0.5,
         "markup": 0.25
       }
+    },
+    "demo-pcs": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "demo-ph-puertorico": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "demo-popeyes-us": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "loadtest-plk-us": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "logs-tillster-elk": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "prod-pcs": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "prod-ph-puertorico": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "prod-popeyes-us": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
     }
+
+
 
   }
 }
