@@ -328,8 +328,72 @@
         "markup": 0.25
       }
     },
-
-
+    "gawkbox-appdev": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "gawkbox-ci": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "gawkbox-prod-b": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
 
     "nesthorn-dev": {
       "m4.large": {
@@ -387,6 +451,74 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+
+
+    "lyfted-dev": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "lyfted-prod": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      }
+    },
+    "lyfted-staging": {
+      "m4.large": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
+      },
+      "m4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.2
       },
       "m5.xlarge": {
         "memory_percentage": 0.5,
