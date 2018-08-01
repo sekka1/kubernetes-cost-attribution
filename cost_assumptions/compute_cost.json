@@ -39,6 +39,14 @@
         "on_demand": 0.266000,
         "spot": 0.14
       }
+    },
+    "c4.xlarge": {
+      "memory": 7575688000,
+      "cpu": 4,
+      "hourly_cost": {
+        "on_demand": 0.1990000,
+        "spot": 0.09
+      }
     }
   },
   "namespaces": {
@@ -59,6 +67,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -84,6 +97,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "istio-system": {
@@ -103,6 +121,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -128,6 +151,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "devops": {
@@ -147,6 +175,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -172,6 +205,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "garland": {
@@ -191,6 +229,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -216,6 +259,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "gawkbox-spinnaker": {
@@ -235,6 +283,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -260,6 +313,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "gawkbox-demo": {
@@ -279,6 +337,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -304,6 +367,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "gawkbox-prod": {
@@ -323,6 +391,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -348,6 +421,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "gawkbox-ci": {
@@ -370,6 +448,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "gawkbox-prod-b": {
@@ -389,6 +472,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -415,6 +503,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
 
@@ -438,6 +531,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
 
@@ -458,6 +556,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -485,6 +588,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "lyfted-prod": {
@@ -507,6 +615,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "lyfted-staging": {
@@ -526,6 +639,11 @@
         "markup": 0.2
       },
       "r4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -552,6 +670,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "dev-bkm-uk": {
@@ -571,6 +694,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -596,6 +724,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "dev-grn-ph-a": {
@@ -615,6 +748,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -640,6 +778,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "dev-mca-us": {
@@ -659,6 +802,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -684,6 +832,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "dev-ph-ca": {
@@ -703,6 +856,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -728,6 +886,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "dev-pms": {
@@ -747,6 +910,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -772,6 +940,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "dr-us-dev": {
@@ -791,6 +964,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -816,6 +994,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "jenkins": {
@@ -835,6 +1018,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -860,6 +1048,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "loadtest-pcs": {
@@ -879,6 +1072,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -904,6 +1102,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "qa-bk-nz": {
@@ -923,6 +1126,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -948,6 +1156,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "qa-grn-ph-a": {
@@ -967,6 +1180,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -992,6 +1210,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "qa-mca-us": {
@@ -1011,6 +1234,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -1036,6 +1264,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "qa-ph-ca": {
@@ -1055,6 +1288,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -1080,6 +1318,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "qa-popeyes-us": {
@@ -1099,6 +1342,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -1124,6 +1372,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "test-ns": {
@@ -1143,6 +1396,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -1168,6 +1426,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "qa-sb-us-a": {
@@ -1187,6 +1450,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -1212,6 +1480,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "metering": {
@@ -1231,6 +1504,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -1256,6 +1534,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "demo-pcs": {
@@ -1275,6 +1558,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -1300,6 +1588,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "demo-popeyes-us": {
@@ -1319,6 +1612,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -1344,6 +1642,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "logs-tillster-elk": {
@@ -1363,6 +1666,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
@@ -1388,6 +1696,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "prod-ph-puertorico": {
@@ -1410,6 +1723,11 @@
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
+      },
+      "c4.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
       }
     },
     "prod-popeyes-us": {
@@ -1429,6 +1747,11 @@
         "markup": 0.25
       },
       "m5.xlarge": {
+        "memory_percentage": 0.5,
+        "cpu_percentage": 0.5,
+        "markup": 0.25
+      },
+      "c4.xlarge": {
         "memory_percentage": 0.5,
         "cpu_percentage": 0.5,
         "markup": 0.25
