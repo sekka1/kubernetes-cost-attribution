@@ -116,7 +116,8 @@ def get_kube_pod_container_resource_limits_cpu_cores_dict(promehtheus_info_dict,
 
     except Exception as x:
         logger.error("here")
-        logger.error('It failed:', x.__class__.__name__)
+        logger.error(response.json()['data']['result'])
+        logger.error('It failed: get_kube_pod_container_resource_limits_cpu_cores_dict', x.__class__.__name__)
         var = traceback.format_exc()
         logger.error(var)
         logger.error("Exiting...")
@@ -171,7 +172,7 @@ def get_kube_pod_container_resource_limits_memory_bytes_dict(promehtheus_info_di
 def requests_retry_session(
     retries=40,
     backoff_factor=10,
-    status_forcelist=(500, 502, 504),
+    status_forcelist=(500, 502, 503, 504, 405, 401, 403, 404),
     session=None,
 ):
     session = session or requests.Session()
