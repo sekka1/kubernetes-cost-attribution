@@ -14,8 +14,6 @@ def pods_resource_limits_cpu_cores(kube_pod_container_resource_limits_cpu_cores_
 
     for row in kube_pod_container_resource_limits_cpu_cores_dict:
 
-        pp.pprint(row)
-
         # Check if the fields are in the dict before proceeding
         if 'node' in row['metric'] and 'exported_namespace' in row['metric'] and 'pod' in row['metric']:
 
