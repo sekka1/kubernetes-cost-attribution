@@ -36,7 +36,7 @@ class FindResourceLimitsMemory(unittest.TestCase):
                     pod
                     )
 
-        self.assertEqual(memory_bytes, -1000000001)
+        self.assertEqual(memory_bytes, 1.0000445566)
 
 if __name__ == '__main__':
     unittest.main()

@@ -36,7 +36,7 @@ class FindResourceLimitsCPU(unittest.TestCase):
                     pod
                     )
 
-        self.assertEqual(cpu_core, -1.01)
+        self.assertEqual(cpu_core, 1.0000112233)
 
 if __name__ == '__main__':
     unittest.main()
