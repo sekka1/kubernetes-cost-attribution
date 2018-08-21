@@ -8,17 +8,22 @@ polling Prometheus for the CPU/Memory information and tallying it up.
 ### Build
 
 ```
-docker build -t garland/managed-kubernetes-billing:dev .
+docker build -t garland/kubernetes-cost-attribution:dev .
 ```
 
+ Running in a container interactively:
 ```
 docker run -it \
--e USER=$USER  -e USERID=$UID \
 --memory=8000m \
 --cpus="1.5" \
 -v ${PWD}:/opt/app \
 -v /tmp:/tmp \
-garland/managed-kubernetes-billing:dev bash
+garland/kubernetes-cost-attribution:dev bash
+```
+
+Pushing the container:
+```
+docker push garland/kubernetes-cost-attribution:dev
 ```
 
 Add in your your local user so that files that are manipulated in the container has your local user's ID
@@ -129,3 +134,16 @@ set one for it.
 
 CPU: 1.0000112233 cores
 Memory: 1.0000445566 MB
+
+# Kubernetes node labels
+These labels needs to be on a node for the billing to correctly identify what type of
+nodes it is:
+
+```
+k8s.info/isSpot: "false"
+k8s.info/instanceType: m4.large
+k8s.info/hasPublicIP: "false"
+k8s.info/application: kube-master
+```
+
+When you describe a node, these labels should be applied to it

@@ -14,12 +14,15 @@ def pods_resource_limits_cpu_cores(kube_pod_container_resource_limits_cpu_cores_
 
     for row in kube_pod_container_resource_limits_cpu_cores_dict:
 
-        if ((row['metric']['exported_namespace'] == exported_namespace) and
-            (row['metric']['node'] == node) and
-            (row['metric']['pod'] == pod)):
+        # Check if the fields are in the dict before proceeding
+        if 'node' in row['metric'] and 'exported_namespace' in row['metric'] and 'pod' in row['metric']:
 
-            cpu_core_limit = float(row['value'][1])
-            break
+            if ((row['metric']['exported_namespace'] == exported_namespace) and
+                (row['metric']['node'] == node) and
+                (row['metric']['pod'] == pod)):
+
+                cpu_core_limit = float(row['value'][1])
+                break
 
     if cpu_core_limit == 1.0000112233:
         logger.error("Did not find a cpu limit for (setting default value to 1.0000112233) - exported_namespace: "+exported_namespace+", pod: "+pod)
@@ -38,12 +41,15 @@ def pods_resource_limits_memory_bytes(kube_pod_container_resource_limits_memory_
 
     for row in kube_pod_container_resource_limits_memory_bytes_dict:
 
-        if ((row['metric']['exported_namespace'] == exported_namespace) and
-            (row['metric']['node'] == node) and
-            (row['metric']['pod'] == pod)):
+        # Check if the fields are in the dict before proceeding
+        if 'node' in row['metric'] and 'exported_namespace' in row['metric'] and 'pod' in row['metric']:
 
-            memory_bytes_limit = int(row['value'][1])
-            break
+            if ((row['metric']['exported_namespace'] == exported_namespace) and
+                (row['metric']['node'] == node) and
+                (row['metric']['pod'] == pod)):
+
+                memory_bytes_limit = int(row['value'][1])
+                break
 
     if memory_bytes_limit == 1.0000445566:
         logger.error("Did not find a memory limit for (setting default value to 1.0000445566) - exported_namespace: "+exported_namespace+", pod: "+pod)
@@ -58,7 +64,8 @@ def machine_info_by_hostname(kube_node_labels_dict, hostname):
     machine_info_dict = None
 
     for row in kube_node_labels_dict:
-        if row['metric']['label_kubernetes_io_hostname'] == hostname:
+        if row['metric']['label_kubernetes_io_hostname'] == hostname.replace(".ec2.internal", "") or row['metric']['label_kubernetes_io_hostname'] == hostname:
+            print(row)
             machine_info_dict = {}
             machine_info_dict['arch'] = row['metric']['label_beta_kubernetes_io_arch']
             machine_info_dict['instance_type'] = row['metric']['label_k8s_info_instanceType']
