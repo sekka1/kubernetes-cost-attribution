@@ -1,11 +1,59 @@
 {
   "ec2_info": {
-    "t2.medium": {
-      "memory": 8075688000,
+    "t2.micro": {
+      "memory": 1073741824,
+      "cpu": 1,
+      "hourly_cost": {
+        "on_demand": 0.0116,
+        "spot": 0.0035
+      }
+    },
+    "t2.nano": {
+      "memory": 536870912,
+      "cpu": 1,
+      "hourly_cost": {
+        "on_demand": 0.005,
+        "spot": 0.0065
+      }
+    },
+    "t2.small": {
+      "memory": 2147483648,
       "cpu": 2,
       "hourly_cost": {
-        "on_demand": 0.1,
-        "spot": 0.0401
+        "on_demand": 0.023,
+        "spot": 0.0069
+      }
+    },
+    "t2.medium": {
+      "memory": 4294967296,
+      "cpu": 4,
+      "hourly_cost": {
+        "on_demand": 0.0464,
+        "spot": 0.0139
+      }
+    },
+    "t2.large": {
+      "memory": 8589934592,
+      "cpu": 8,
+      "hourly_cost": {
+        "on_demand": 0.0928,
+        "spot": 0.0278
+      }
+    },
+    "t2.xlarge": {
+      "memory": 17179869184,
+      "cpu": 16,
+      "hourly_cost": {
+        "on_demand": 0.1856,
+        "spot": 0.0478
+      }
+    },
+    "t2.2xlarge": {
+      "memory": 34359738368,
+      "cpu": 32,
+      "hourly_cost": {
+        "on_demand": 0.3712,
+        "spot": 0.1114
       }
     },
     "m4.large": {
@@ -24,19 +72,91 @@
         "spot": 0.0703
       }
     },
-    "m5.xlarge": {
-      "memory": 16151376000,
+    "m4.2xlarge": {
+      "memory": 34359738368,
       "cpu": 4,
       "hourly_cost": {
-        "on_demand": 0.2,
-        "spot": 0.0703
+        "on_demand": 0.4,
+        "spot": 0.1306
+      }
+    },
+    "m4.4xlarge": {
+      "memory": 68719476736,
+      "cpu": 16,
+      "hourly_cost": {
+        "on_demand": 0.8,
+        "spot": 0.4
+      }
+    },
+    "m4.10xlarge": {
+      "memory": 160438953472,
+      "cpu": 40,
+      "hourly_cost": {
+        "on_demand": 2,
+        "spot": 0.7
+      }
+    },
+    "m4.16xlarge": {
+      "memory": 256877906944,
+      "cpu": 64,
+      "hourly_cost": {
+        "on_demand": 3.2,
+        "spot": 1.05
+      }
+    },
+    "m5.large": {
+      "memory": 8589934592,
+      "cpu": 2,
+      "hourly_cost": {
+        "on_demand": 0.096,
+        "spot": 0.044
+      }
+    },
+    "m5.xlarge": {
+      "memory": 16384000000,
+      "cpu": 16,
+      "hourly_cost": {
+        "on_demand": 0.192,
+        "spot": 0.0799
+      }
+    },
+    "m5.2xlarge": {
+      "memory": 34359738368,
+      "cpu": 32,
+      "hourly_cost": {
+        "on_demand": 0.384,
+        "spot": 0.1816
+      }
+    },
+    "m5.4xlarge": {
+      "memory": 68719476736,
+      "cpu": 64,
+      "hourly_cost": {
+        "on_demand": 0.768,
+        "spot": 0.2666
+      }
+    },
+    "m5.12xlarge": {
+      "memory": 192438953472,
+      "cpu": 384,
+      "hourly_cost": {
+        "on_demand": 2.304,
+        "spot": 1.13
+      }
+    },
+    "m5.24xlarge": {
+      "memory": 384877906944,
+      "cpu": 96,
+      "hourly_cost": {
+        "on_demand": 4.608,
+        "spot": 1.57
       }
     },
     "r4.xlarge": {
       "memory": 32302752000,
       "cpu": 4,
       "hourly_cost": {
-        "on_demand": 0.266000,
+        "on_demand": 0.266,
         "spot": 0.14
       }
     },
@@ -44,7 +164,7 @@
       "memory": 7575688000,
       "cpu": 4,
       "hourly_cost": {
-        "on_demand": 0.1990000,
+        "on_demand": 0.199,
         "spot": 0.09
       }
     }
