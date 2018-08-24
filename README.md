@@ -5,6 +5,10 @@ polling Prometheus for the CPU/Memory information and tallying it up.
 
 ## Docker
 
+### Dockerfile
+
+The base image is from:  https://github.com/GoogleCloudPlatform/python-runtime/releases
+
 ### Build
 
 ```
