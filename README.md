@@ -12,7 +12,7 @@ The base image is from:  https://github.com/GoogleCloudPlatform/python-runtime/r
 ### Build
 
 ```
-docker build -t garland/kubernetes-cost-attribution:dev .
+docker build -t gcr.io/managedkube/kubernetes-cost-attribution:dev .
 ```
 
  Running in a container interactively:
@@ -22,12 +22,12 @@ docker run -it \
 --cpus="1.5" \
 -v ${PWD}:/opt/app \
 -v /tmp:/tmp \
-garland/kubernetes-cost-attribution:dev bash
+gcr.io/managedkube/kubernetes-cost-attribution:dev bash
 ```
 
 Pushing the container:
 ```
-docker push garland/kubernetes-cost-attribution:dev
+docker push gcr.io/managedkube/kubernetes-cost-attribution:dev
 ```
 
 Add in your your local user so that files that are manipulated in the container has your local user's ID
@@ -151,3 +151,9 @@ k8s.info/application: kube-master
 ```
 
 When you describe a node, these labels should be applied to it
+
+# Helm Usage:
+
+```
+helm template Chart/ | kubectl apply -f -
+```

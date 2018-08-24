@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: last-state
+  namespace: {{ .Values.namespace }}
+data:
+  last_state.json: |-
+    {"last_poll_time": 1534817580}

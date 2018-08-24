@@ -1,0 +1,9 @@
+---
+namespace: gar
+
+calculator:
+  image:
+    repository: gcr.io/managedkube/kubernetes-cost-attribution
+    tag: refactor-namespaces
+    pullPolicy: Always
+    #pullPolicy: IfNotPresent

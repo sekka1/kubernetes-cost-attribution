@@ -1,0 +1,10 @@
+name: kubernetes-cost-attribution
+home: https://github.com/sekka1/kubernetes-cost-attribution
+version: 1.0.0
+appVersion: 3.6
+description: An application to calculate the cost of each running pods on the cluster by polling Prometheus for the CPU/Memory information and tallying it up.
+sources:
+  - https://github.com/sekka1/kubernetes-cost-attribution
+maintainers:
+  - name: garland
+    email: garland@managedkube.com

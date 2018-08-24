@@ -6,3 +6,5 @@ RUN pip3 install virtualenv requests
 ADD . /opt/app
 
 WORKDIR /opt/app
+
+RUN mkdir /opt/cost-attribution-output
