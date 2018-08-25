@@ -6,5 +6,3 @@ RUN pip3 install virtualenv requests prometheus_client schedule
 ADD . /opt/app
 
 WORKDIR /opt/app
-
-RUN mkdir /opt/cost-attribution-output
