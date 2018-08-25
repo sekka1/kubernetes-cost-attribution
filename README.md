@@ -47,6 +47,8 @@ sudo apt install python3-pip
 sudo pip3 install virtualenv
 
 pip3 install requests
+pip3 install prometheus_client
+pip3 install schedule
 ```
 
 ### Create the virtualenv
