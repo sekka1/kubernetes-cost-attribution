@@ -1,7 +1,7 @@
 ---
 namespace: gar
 
-calculator:
+billing:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution
     tag: refactor-namespaces

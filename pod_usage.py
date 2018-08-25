@@ -26,7 +26,7 @@ last_state_file_location = sys.argv[5]
 cycles_to_run = int(sys.argv[6])
 
 # Prometheus - Start up the server to expose the metrics.
-start_http_server(8000)
+start_http_server(9101)
 prometheus_counter = Counter('kubernetes_cost_attribution', 'namespace cost', ['namespace', 'duration'])
 
 def job():

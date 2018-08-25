@@ -2,15 +2,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: calculator
+  name: billing
   namespace: {{ .Values.namespace }}
   labels:
-    app: calculator
+    app: billing
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: calculator
+      app: billing
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -19,25 +19,24 @@ spec:
   template:
     metadata:
       labels:
-        app: calculator
+        app: billing
     spec:
       containers:
-      - name: calculator
-        image: "{{ .Values.calculator.image.repository }}:{{ .Values.calculator.image.tag }}"
+      - name: billing
+        image: "{{ .Values.billing.image.repository }}:{{ .Values.billing.image.tag }}"
         command:
           - "sh"
         args:
           - "-c"
           - |
-            python3 pod_usage.py https://prometheus.dev.us-east-1.k8s.tillster.com tillster-kube ecOKg7edlfAgVyPx+bLSHu0 /opt/cost-attribution-output/billing-managed-kube.csv /opt/last-state/last_state.json 3
-            python3 billing_summary.py /opt/cost-attribution-output/billing-managed-kube.csv
+            python3 pod_usage.py https://prometheus.dev.us-east-1.k8s.tillster.com tillster-kube ecOKg7edlfAgVyPx+bLSHu0 /opt/cost-attribution-output/billing-managed-kube.csv /opt/last-state/last_state.json 60
             echo "----Completed----"
             sleep 99999
         env:
           - name: NAME
             value: "prod.us-east-1"
         ports:
-        - containerPort: 8080
+        - containerPort: 9101
         # resources:
         #   requests:
         #     memory: "256Mi"
@@ -45,7 +44,7 @@ spec:
         #   limits:
         #     memory: "1024Mi"
         #     cpu: "500m"
-        imagePullPolicy: "{{ .Values.calculator.image.pullPolicy }}"
+        imagePullPolicy: "{{ .Values.billing.image.pullPolicy }}"
         volumeMounts:
         - mountPath: /opt/last-state
           name: last-state
