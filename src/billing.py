@@ -22,7 +22,7 @@ def run(promehtheus_info_dict, cycles_to_run, billing_csv_output_file, last_stat
     while cycle_count < cycles_to_run:
 
         start_time = time.time() - 3600 # start running from an hour ago
-        end_time = last_state.get_next_end_cycle_time(last_state_dict['last_poll_time'])
+        end_time = last_state.get_next_end_cycle_time(start_time)
 
         logger.info("###########################################")
         logger.info("###########################################")
