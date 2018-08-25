@@ -20,10 +20,8 @@ def run(promehtheus_info_dict, cycles_to_run, billing_csv_output_file, last_stat
     t0 = time.time()
 
     while cycle_count < cycles_to_run:
-        # Get last_state.json
-        last_state_dict = last_state.get(last_state_file_location)
 
-        start_time = last_state_dict['last_poll_time']
+        start_time = time.time() - 3600 # start running from an hour ago
         end_time = last_state.get_next_end_cycle_time(last_state_dict['last_poll_time'])
 
         logger.info("###########################################")
@@ -46,9 +44,6 @@ def run(promehtheus_info_dict, cycles_to_run, billing_csv_output_file, last_stat
             logger.error("Exiting...")
             sys.exit()
 
-
-        # Setting the new value for the last_state.json file
-        last_state.set(last_state_file_location, end_time)
 
         logger.info("###########################################")
         logger.info("###########################################")
