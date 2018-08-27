@@ -4,7 +4,7 @@ import traceback
 from time import sleep
 from src import billing
 from src import logger_config
-from prometheus_client import start_http_server, Gauge
+from prometheus_client import start_http_server, Gauge, Counter
 import schedule
 
 logger = logger_config.logger
@@ -27,10 +27,10 @@ start_minutes_ago = int(sys.argv[6])
 
 # Prometheus - Start up the server to expose the metrics.
 start_http_server(9101)
-prometheus_gauge = Gauge('kubernetes_cost_attribution', 'namespace cost', ['namespace_name', 'duration'])
+prometheus_counter = Gauge('kubernetes_cost_attribution', 'namespace cost', ['namespace_name', 'duration'])
 
 def job():
-    billing.run(promehtheus_info_dict, start_minutes_ago, billing_csv_output_file, last_state_file_location, prometheus_gauge)
+    billing.run(promehtheus_info_dict, start_minutes_ago, billing_csv_output_file, last_state_file_location, prometheus_counter)
 
 schedule.every(start_minutes_ago).minutes.do(job)
 

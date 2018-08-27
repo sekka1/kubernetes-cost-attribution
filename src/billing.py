@@ -12,18 +12,19 @@ from time import sleep
 
 logger = logger_config.logger
 
-def run(promehtheus_info_dict, start_minutes_ago, billing_csv_output_file, last_state_file_location, prometheus_gauge):
+def run(promehtheus_info_dict, start_minutes_ago, billing_csv_output_file, last_state_file_location, prometheus_counter):
     #####################################
     # Billing cycle
     #####################################
     cycle_count = 0
+    start_unixtime = time.time()
     t0 = time.time()
 
     while cycle_count < start_minutes_ago:
 
         # start_minutes_ago - how many minutes ago/back do you want to start the cycle?
         # Setting the time to mins * 60 seconds
-        start_time = time.time() - (start_minutes_ago * 60)
+        start_time = start_unixtime - (start_minutes_ago * 60)
         end_time = last_state.get_next_end_cycle_time(start_time)
 
         logger.info("###########################################")
@@ -105,4 +106,4 @@ def run(promehtheus_info_dict, start_minutes_ago, billing_csv_output_file, last_
     ##############################################
     for namespace in namespace_sums_dict:
         logger.info(namespace+" : "+str(namespace_sums_dict[namespace]['total']))
-        prometheus_gauge.labels(duration='day', namespace_name=namespace).set(namespace_sums_dict[namespace]['total'])
+        prometheus_counter.labels(duration='day', namespace_name=namespace).inc(namespace_sums_dict[namespace]['total'])
