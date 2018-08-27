@@ -12,7 +12,7 @@ from time import sleep
 
 logger = logger_config.logger
 
-def run(promehtheus_info_dict, cycles_to_run, billing_csv_output_file, last_state_file_location, prometheus_counter):
+def run(promehtheus_info_dict, cycles_to_run, start_minus_seconds, billing_csv_output_file, last_state_file_location, prometheus_counter):
     #####################################
     # Billing cycle
     #####################################
@@ -21,7 +21,11 @@ def run(promehtheus_info_dict, cycles_to_run, billing_csv_output_file, last_stat
 
     while cycle_count < cycles_to_run:
 
-        start_time = time.time() - 3600 # start running from an hour ago
+        # start_time - is now minus the duration of the cycle in seconds
+        # Setting start_minus_seconds to 3600 means to start 1 hour ago
+        # then the cycles_to_run is in minutes. To run the last hour,
+        # set the cycles_to_run to 60
+        start_time = time.time() - start_minus_seconds
         end_time = last_state.get_next_end_cycle_time(start_time)
 
         logger.info("###########################################")
@@ -95,10 +99,12 @@ def run(promehtheus_info_dict, cycles_to_run, billing_csv_output_file, last_stat
                 'total': float(row['cost_per_min_total'])
             }
 
+    # Truncate file
+    output_csv.truncate_output_file(billing_csv_output_file)
+
     ##############################################
     # Prometheus - Output namespace's cost metrics
     ##############################################
     for namespace in namespace_sums_dict:
-        print(namespace_sums_dict[namespace])
-        print(namespace_sums_dict[namespace]['total'])
-        prometheus_counter.labels(duration='day', namespace=namespace).inc(namespace_sums_dict[namespace]['total'])
+        logger.info(namespace+" : "+str(namespace_sums_dict[namespace]['total']))
+        prometheus_counter.labels(duration='day', namespace_name=namespace).inc(namespace_sums_dict[namespace]['total'])

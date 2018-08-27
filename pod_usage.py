@@ -24,13 +24,14 @@ promehtheus_info_dict = {
 billing_csv_output_file = sys.argv[4]
 last_state_file_location = sys.argv[5]
 cycles_to_run = int(sys.argv[6])
+start_minus_seconds = int(sys.argv[7])
 
 # Prometheus - Start up the server to expose the metrics.
 start_http_server(9101)
-prometheus_counter = Counter('kubernetes_cost_attribution', 'namespace cost', ['namespace', 'duration'])
+prometheus_counter = Counter('kubernetes_cost_attribution', 'namespace cost', ['namespace_name', 'duration'])
 
 def job():
-    billing.run(promehtheus_info_dict, cycles_to_run, billing_csv_output_file, last_state_file_location, prometheus_counter)
+    billing.run(promehtheus_info_dict, cycles_to_run, start_minus_seconds, billing_csv_output_file, last_state_file_location, prometheus_counter)
 
 schedule.every().hour.do(job)
 

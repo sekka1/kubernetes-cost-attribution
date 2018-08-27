@@ -78,3 +78,7 @@ def read(billing_csv_file):
             return_list.append(row)
 
         return return_list
+
+def truncate_output_file(billing_csv_file):
+    with open(billing_csv_file, 'w+') as csvfile:
+        logger.debug("opening file to truncate")
