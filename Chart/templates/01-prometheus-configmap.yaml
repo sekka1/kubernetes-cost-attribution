@@ -35,62 +35,62 @@ data:
         target_label: __metrics_path__
         replacement: /api/v1/nodes/${1}/proxy/metrics
 
-    - job_name: kubernetes-nodes-cadvisor
-      scrape_interval: 10s
-      scrape_timeout: 10s
-      scheme: https  # remove if you want to scrape metrics on insecure port
-      tls_config:
-        ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-      kubernetes_sd_configs:
-        - role: node
-      relabel_configs:
-        - action: labelmap
-          regex: __meta_kubernetes_node_label_(.+)
-        - target_label: __address__
-          replacement: kubernetes.default.svc:443
+    # - job_name: kubernetes-nodes-cadvisor
+    #   scrape_interval: 10s
+    #   scrape_timeout: 10s
+    #   scheme: https  # remove if you want to scrape metrics on insecure port
+    #   tls_config:
+    #     ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    #   bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+    #   kubernetes_sd_configs:
+    #     - role: node
+    #   relabel_configs:
+    #     - action: labelmap
+    #       regex: __meta_kubernetes_node_label_(.+)
+    #     - target_label: __address__
+    #       replacement: kubernetes.default.svc:443
+    #
+    #     # Only for Kubernetes ^1.7.3.
+    #     # See: https://github.com/prometheus/prometheus/issues/2916
+    #     # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L129
+    #     # - source_labels: [__meta_kubernetes_node_name]
+    #     #   regex: (.+)
+    #     #   target_label: __metrics_path__
+    #     #   replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+    #
+    #     # for now, using this until after 1.7.3
+    #     - source_labels: [__meta_kubernetes_node_name]
+    #       regex: (.+)
+    #       target_label: __metrics_path__
+    #       replacement: /api/v1/nodes/${1}:4194/proxy/metrics
+    #
+    #   metric_relabel_configs:
+    #     - action: replace
+    #       source_labels: [id]
+    #       regex: '^/machine\.slice/machine-rkt\\x2d([^\\]+)\\.+/([^/]+)\.service$'
+    #       target_label: rkt_container_name
+    #       replacement: '${2}-${1}'
+    #     - action: replace
+    #       source_labels: [id]
+    #       regex: '^/system\.slice/(.+)\.service$'
+    #       target_label: systemd_service_name
+    #       replacement: '${1}'
 
-        # Only for Kubernetes ^1.7.3.
-        # See: https://github.com/prometheus/prometheus/issues/2916
-        # https://github.com/prometheus/prometheus/blob/master/documentation/examples/prometheus-kubernetes.yml#L129
-        # - source_labels: [__meta_kubernetes_node_name]
-        #   regex: (.+)
-        #   target_label: __metrics_path__
-        #   replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
-
-        # for now, using this until after 1.7.3
-        - source_labels: [__meta_kubernetes_node_name]
-          regex: (.+)
-          target_label: __metrics_path__
-          replacement: /api/v1/nodes/${1}:4194/proxy/metrics
-
-      metric_relabel_configs:
-        - action: replace
-          source_labels: [id]
-          regex: '^/machine\.slice/machine-rkt\\x2d([^\\]+)\\.+/([^/]+)\.service$'
-          target_label: rkt_container_name
-          replacement: '${2}-${1}'
-        - action: replace
-          source_labels: [id]
-          regex: '^/system\.slice/(.+)\.service$'
-          target_label: systemd_service_name
-          replacement: '${1}'
-
-    - job_name: node-exporter
-      scheme: http
-      bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-
-      kubernetes_sd_configs:
-      - role: node
-
-      relabel_configs:
-      - action: labelmap
-        regex: __meta_kubernetes_node_label_(.+)
-      - source_labels: [__address__]
-        action: replace
-        target_label: __address__
-        regex: ([^:]+)(?::\d+)?
-        replacement: $1:9100
+    # - job_name: node-exporter
+    #   scheme: http
+    #   bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+    #
+    #   kubernetes_sd_configs:
+    #   - role: node
+    #
+    #   relabel_configs:
+    #   - action: labelmap
+    #     regex: __meta_kubernetes_node_label_(.+)
+    #   - source_labels: [__address__]
+    #     action: replace
+    #     target_label: __address__
+    #     regex: ([^:]+)(?::\d+)?
+    #     replacement: $1:9100
 
     # Scrapes the endpoint lists for the Kubernetes API server, kube-state-metrics,
     # and node-exporter, which we all consider part of a default setup.
@@ -180,49 +180,49 @@ data:
     # * `prometheus.io/path`: If the metrics path is not `/metrics` override this.
     # * `prometheus.io/port`: Scrape the pod on the indicated port instead of the
     # pod's declared ports (default is a port-free target if none are declared).
-    - job_name: 'pods'
+    # - job_name: 'pods'
+    #
+    #   kubernetes_sd_configs:
+    #   - role: pod
+    #
+    #   relabel_configs:
+    #   - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+    #     action: keep
+    #     regex: true
+    #   - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+    #     action: replace
+    #     target_label: __metrics_path__
+    #     regex: (.+)
+    #   - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+    #     action: replace
+    #     regex: ([^:]+)(?::\d+)?;(\d+)
+    #     replacement: $1:$2
+    #     target_label: __address__
+    #   - action: labelmap
+    #     regex: __meta_kubernetes_pod_label_(.+)
+    #   # - source_labels: [__meta_kubernetes_pod_namespace]
+    #   #   action: replace
+    #   #   target_label: namespace
+    #   # - source_labels: [__meta_kubernetes_pod_name]
+    #   #   action: replace
+    #   #   target_label: instance
+    #   # - source_labels: [__meta_kubernetes_pod_node_name]
+    #   #   target_label: node
 
-      kubernetes_sd_configs:
-      - role: pod
-
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
-        action: keep
-        regex: true
-      - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
-        action: replace
-        target_label: __metrics_path__
-        regex: (.+)
-      - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
-        action: replace
-        regex: ([^:]+)(?::\d+)?;(\d+)
-        replacement: $1:$2
-        target_label: __address__
-      - action: labelmap
-        regex: __meta_kubernetes_pod_label_(.+)
-      # - source_labels: [__meta_kubernetes_pod_namespace]
-      #   action: replace
-      #   target_label: namespace
-      # - source_labels: [__meta_kubernetes_pod_name]
-      #   action: replace
-      #   target_label: instance
-      # - source_labels: [__meta_kubernetes_pod_node_name]
-      #   target_label: node
-
-    alerting:
-      alert_relabel_configs:
-      - action: replace
-        target_label: environment
-        replacement: ${ENVIRONMENT}
-
-      alertmanagers:
-      - path_prefix: /alertmanager
-
-        kubernetes_sd_configs:
-        - role: endpoints
-
-        relabel_configs:
-        - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name]
-          regex: devops/alertmanager
-          separator: /
-          action: keep
+    # alerting:
+    #   alert_relabel_configs:
+    #   - action: replace
+    #     target_label: environment
+    #     replacement: ${ENVIRONMENT}
+    #
+    #   alertmanagers:
+    #   - path_prefix: /alertmanager
+    #
+    #     kubernetes_sd_configs:
+    #     - role: endpoints
+    #
+    #     relabel_configs:
+    #     - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name]
+    #       regex: devops/alertmanager
+    #       separator: /
+    #       action: keep

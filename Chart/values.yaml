@@ -35,8 +35,8 @@ kubeStateMetrics:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 250m
-      memory: 125Mi
+      cpu: 500m
+      memory: 500Mi
     requests:
       cpu: 20m
       memory: 20Mi
