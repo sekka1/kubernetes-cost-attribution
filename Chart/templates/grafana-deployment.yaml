@@ -1,0 +1,59 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+        - name: grafana
+          image: "{{ .Values.grafana.image.repository }}:{{ .Values.grafana.image.tag }}"
+          imagePullPolicy: "{{ .Values.grafana.image.pullPolicy }}"
+          env:
+          - name: GF_AUTH_BASIC_ENABLED
+            value: "true"
+          # - name: GF_SERVER_ROOT_URL
+          #   value: "http://grafana.${ENVIRONMENT}.${BASE_DOMAIN_NAME}"
+          - name: GF_SECURITY_ADMIN_USER
+            value: "{{ .Values.grafana.credentials.user }}"
+          - name: GF_SECURITY_ADMIN_PASSWORD
+            value: "{{ .Values.grafana.credentials.password }}"
+          # - name: GF_INSTALL_PLUGINS
+          #   value: grafana-kubernetes-app
+          ports:
+          - name: web
+            containerPort: 3000
+          resources:
+            limits:
+              cpu: {{ .Values.grafana.resources.limits.cpu }}
+              memory: {{ .Values.grafana.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.grafana.resources.requests.cpu }}
+              memory: {{ .Values.grafana.resources.requests.memory }}
+          volumeMounts:
+          - name: grafana-dashboard-config
+            mountPath: /etc/grafana/provisioning/dashboards
+          - name: grafana-datasource
+            mountPath: /etc/grafana/provisioning/datasources
+          - name: grafana-dashboards
+            mountPath: /opt/dashboards
+
+      volumes:
+      - name: grafana-dashboard-config
+        configMap:
+          name: grafana-dashboard-config
+      - name: grafana-dashboards
+        configMap:
+          name: grafana-dashboards
+      - name: grafana-datasource
+        configMap:
+          name: grafana-datasource

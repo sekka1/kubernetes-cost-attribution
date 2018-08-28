@@ -40,3 +40,19 @@ kubeStateMetrics:
     requests:
       cpu: 20m
       memory: 20Mi
+
+grafana:
+  image:
+    repository: grafana/grafana
+    tag: 5.1.2
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 20m
+      memory: 20Mi
+  credentials:
+    user: admin
+    password: kube-cost-attribution
