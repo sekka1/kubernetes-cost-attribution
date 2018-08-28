@@ -29,7 +29,7 @@ spec:
         args:
           - "-c"
           - |
-            python3 pod_usage.py https://prometheus.dev.us-east-1.k8s.tillster.com tillster-kube ecOKg7edlfAgVyPx+bLSHu0 /opt/cost-attribution-output/billing-managed-kube.csv /opt/last-state/last_state.json 5
+            python3 pod_usage.py https://prometheus.dev.us-east-1.k8s.tillster.com tillster-kube ecOKg7edlfAgVyPx+bLSHu0 /opt/cost-attribution-output/billing-managed-kube.csv /opt/last-state/last_state.json 60
             echo "----Completed----"
             sleep 99999
         env:
