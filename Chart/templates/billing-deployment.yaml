@@ -45,6 +45,13 @@ spec:
         #     memory: "1024Mi"
         #     cpu: "500m"
         imagePullPolicy: "{{ .Values.billing.image.pullPolicy }}"
+        resources:
+          limits:
+            cpu: {{ .Values.billing.resources.limits.cpu }}
+            memory: {{ .Values.billing.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.billing.resources.requests.cpu }}
+            memory: {{ .Values.billing.resources.requests.memory }}
         volumeMounts:
         - mountPath: /opt/last-state
           name: last-state

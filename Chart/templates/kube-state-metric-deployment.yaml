@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kube-state-metrics-deployment
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        k8s-app: kube-state-metrics
+    spec:
+      serviceAccountName: kube-state-metric
+      containers:
+      - name: kube-state-metrics
+        image: "{{ .Values.kubeStateMetrics.image.repository }}:{{ .Values.kubeStateMetrics.image.tag }}"
+        imagePullPolicy: "{{ .Values.kubeStateMetrics.image.pullPolicy }}"
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: {{ .Values.kubeStateMetrics.resources.limits.cpu }}
+            memory: {{ .Values.kubeStateMetrics.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.kubeStateMetrics.resources.requests.cpu }}
+            memory: {{ .Values.kubeStateMetrics.resources.requests.memory }}

@@ -17,8 +17,8 @@ spec:
     spec:
       serviceAccountName: prometheus
       terminationGracePeriodSeconds: 300
-      nodeSelector:
-        k8s.info/application: infrastructure
+      # nodeSelector:
+      #   k8s.info/application: infrastructure
 
       initContainers:
       - name: init-directory
@@ -41,7 +41,8 @@ spec:
 
       containers:
       - name: prometheus
-        image: prom/prometheus:v2.2.1
+        image: "{{ .Values.prometheus.image.repository }}:{{ .Values.prometheus.image.tag }}"
+        imagePullPolicy: "{{ .Values.prometheus.image.pullPolicy }}"
         args: [
           "--config.file=/etc/prometheus/config/config.yml",
           "--web.external-url=http://prometheus.prod-1.infra.devops.bot",
@@ -62,28 +63,12 @@ spec:
           mountPath: /data
         resources:
           limits:
-            cpu: 8000m
-            memory: 8000Mi
+            cpu: {{ .Values.prometheus.resources.limits.cpu }}
+            memory: {{ .Values.prometheus.resources.limits.memory }}
           requests:
-            cpu: 250m
-            memory: 250Mi
-      - name: configmap-reload
-        image: quay.io/coreos/configmap-reload:v0.0.1 # https://github.com/jimmidyson/configmap-reload
-        args: [
-          "-webhook-url=http://localhost:9090/-/reload",
-          "-volume-dir=/etc/prometheus/config"
-        ]
-        volumeMounts:
-        - name: config
-          mountPath: /etc/prometheus/config
-          readOnly: true
-        # - name: rules
-        #   mountPath: /etc/prometheus/rules
-        #   readOnly: true
-        resources:
-          limits:
-            cpu: 5m
-            memory: 10Mi
+            cpu: {{ .Values.prometheus.resources.requests.cpu }}
+            memory: {{ .Values.prometheus.resources.requests.memory }}
+
       volumes:
       - name: config
         configMap:
