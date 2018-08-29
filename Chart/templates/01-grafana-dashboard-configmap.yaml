@@ -24,7 +24,7 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": null,
+      "id": 1,
       "links": [],
       "panels": [
         {
@@ -33,8 +33,63 @@ data:
           "fontSize": "100%",
           "gridPos": {
             "h": 10,
-            "w": 13,
+            "w": 12,
             "x": 0,
+            "y": 0
+          },
+          "id": 6,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 1,
+            "desc": true
+          },
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "date"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "$$hashKey": "object:357",
+              "expr": "sum(increase(kubernetes_cost_attribution{}[30d])) by (namespace_name)",
+              "format": "table",
+              "interval": "1d",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "title": "Last 30 Day's Cost",
+          "transform": "table",
+          "type": "table"
+        },
+        {
+          "columns": [],
+          "datasource": "prometheus",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 10,
+            "w": 12,
+            "x": 12,
             "y": 0
           },
           "id": 4,
@@ -44,7 +99,7 @@ data:
           "showHeader": true,
           "sort": {
             "col": 1,
-            "desc": false
+            "desc": true
           },
           "styles": [
             {
@@ -80,7 +135,7 @@ data:
               "refId": "A"
             }
           ],
-          "title": "Panel Title",
+          "title": "Last 24 Hour Cost",
           "transform": "table",
           "type": "table"
         },
@@ -109,6 +164,7 @@ data:
           },
           "lines": true,
           "linewidth": 1,
+          "links": [],
           "nullPointMode": "null",
           "percentage": false,
           "pointradius": 5,
@@ -120,8 +176,10 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(increase(kubernetes_cost_attribution{namespace_name=~\"gar|kube-system\"}[1h])) by (namespace_name)",
+              "$$hashKey": "object:474",
+              "expr": "sum(increase(kubernetes_cost_attribution{}[30d])) by (namespace_name)",
               "format": "time_series",
+              "interval": "",
               "intervalFactor": 1,
               "refId": "A"
             }
@@ -129,7 +187,92 @@ data:
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Panel Title",
+          "title": "Last 30 Day's Cost",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "prometheus",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 10
+          },
+          "id": 7,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "$$hashKey": "object:474",
+              "expr": "sum(increase(kubernetes_cost_attribution{}[24h])) by (namespace_name)",
+              "format": "time_series",
+              "interval": "",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Last 24 Hour Cost",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -203,7 +346,7 @@ data:
         ]
       },
       "timezone": "",
-      "title": "gar1",
-      "uid": "5nNM4i2ik",
+      "title": "Kubernetes Cost Attribution",
+      "uid": null,
       "version": 1
     }
