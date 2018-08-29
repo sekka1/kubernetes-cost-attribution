@@ -28,6 +28,172 @@ data:
       "links": [],
       "panels": [
         {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "#299c46",
+            "rgba(237, 129, 40, 0.89)",
+            "#d44a3a"
+          ],
+          "datasource": "prometheus",
+          "decimals": 4,
+          "format": "currencyUSD",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "id": 9,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "$$hashKey": "object:144",
+              "expr": "sum(increase(kubernetes_cost_attribution{}[30d]))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": "",
+          "timeFrom": "30d",
+          "title": "Total Cost - Last 30 Days",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
+          "cacheTimeout": null,
+          "colorBackground": false,
+          "colorValue": false,
+          "colors": [
+            "#299c46",
+            "rgba(237, 129, 40, 0.89)",
+            "#d44a3a"
+          ],
+          "datasource": "prometheus",
+          "decimals": 4,
+          "format": "currencyUSD",
+          "gauge": {
+            "maxValue": 100,
+            "minValue": 0,
+            "show": false,
+            "thresholdLabels": false,
+            "thresholdMarkers": true
+          },
+          "gridPos": {
+            "h": 2,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          "id": 10,
+          "interval": null,
+          "links": [],
+          "mappingType": 1,
+          "mappingTypes": [
+            {
+              "name": "value to text",
+              "value": 1
+            },
+            {
+              "name": "range to text",
+              "value": 2
+            }
+          ],
+          "maxDataPoints": 100,
+          "nullPointMode": "connected",
+          "nullText": null,
+          "postfix": "",
+          "postfixFontSize": "50%",
+          "prefix": "",
+          "prefixFontSize": "50%",
+          "rangeMaps": [
+            {
+              "from": "null",
+              "text": "N/A",
+              "to": "null"
+            }
+          ],
+          "sparkline": {
+            "fillColor": "rgba(31, 118, 189, 0.18)",
+            "full": false,
+            "lineColor": "rgb(31, 120, 193)",
+            "show": false
+          },
+          "tableColumn": "",
+          "targets": [
+            {
+              "$$hashKey": "object:144",
+              "expr": "sum(increase(kubernetes_cost_attribution{}[24h]))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": "",
+          "timeFrom": "24h",
+          "title": "Total Cost - Last 24 Hours",
+          "type": "singlestat",
+          "valueFontSize": "80%",
+          "valueMaps": [
+            {
+              "op": "=",
+              "text": "N/A",
+              "value": "null"
+            }
+          ],
+          "valueName": "avg"
+        },
+        {
           "columns": [],
           "datasource": "prometheus",
           "fontSize": "100%",
@@ -35,7 +201,7 @@ data:
             "h": 10,
             "w": 12,
             "x": 0,
-            "y": 0
+            "y": 2
           },
           "id": 6,
           "links": [],
@@ -51,6 +217,7 @@ data:
               "$$hashKey": "object:824",
               "alias": "Time",
               "dateFormat": "MMMM D, YYYY LT",
+              "link": false,
               "pattern": "Time",
               "type": "date"
             },
@@ -80,7 +247,8 @@ data:
               "refId": "A"
             }
           ],
-          "title": "Last 30 Day's Cost",
+          "timeFrom": "30d",
+          "title": "Cost: Last 30 Days",
           "transform": "table",
           "type": "table"
         },
@@ -92,7 +260,7 @@ data:
             "h": 10,
             "w": 12,
             "x": 12,
-            "y": 0
+            "y": 2
           },
           "id": 4,
           "links": [],
@@ -137,7 +305,8 @@ data:
               "refId": "A"
             }
           ],
-          "title": "Last 24 Hour Cost",
+          "timeFrom": "24h",
+          "title": "Cost: Last 24 Hours",
           "transform": "table",
           "transparent": false,
           "type": "table"
@@ -154,7 +323,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 10
+            "y": 12
           },
           "id": 2,
           "legend": {
@@ -189,9 +358,9 @@ data:
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
+          "timeFrom": "30d",
           "timeShift": null,
-          "title": "Last 30 Day's Cost",
+          "title": "Cost: Last 30 Days",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -243,7 +412,7 @@ data:
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 10
+            "y": 12
           },
           "id": 7,
           "legend": {
@@ -279,9 +448,9 @@ data:
             }
           ],
           "thresholds": [],
-          "timeFrom": null,
+          "timeFrom": "24h",
           "timeShift": null,
-          "title": "Last 24 Hour Cost",
+          "title": "Cost: Last 24 Hours",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -329,7 +498,7 @@ data:
         "list": []
       },
       "time": {
-        "from": "now-24h",
+        "from": "now-5m",
         "to": "now"
       },
       "timepicker": {
