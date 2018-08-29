@@ -24,7 +24,7 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": 1,
+      "id": null,
       "links": [],
       "panels": [
         {
@@ -48,12 +48,14 @@ data:
           },
           "styles": [
             {
+              "$$hashKey": "object:824",
               "alias": "Time",
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "dateFormat": "MMMM D, YYYY LT",
               "pattern": "Time",
               "type": "date"
             },
             {
+              "$$hashKey": "object:825",
               "alias": "",
               "colorMode": null,
               "colors": [
@@ -105,7 +107,7 @@ data:
             {
               "$$hashKey": "object:763",
               "alias": "Time",
-              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "dateFormat": "MMMM D, YYYY LT",
               "pattern": "Time",
               "type": "date"
             },
@@ -137,6 +139,7 @@ data:
           ],
           "title": "Last 24 Hour Cost",
           "transform": "table",
+          "transparent": false,
           "type": "table"
         },
         {
@@ -145,6 +148,7 @@ data:
           "dashLength": 10,
           "dashes": false,
           "datasource": "prometheus",
+          "decimals": 4,
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -203,7 +207,9 @@ data:
           },
           "yaxes": [
             {
-              "format": "short",
+              "$$hashKey": "object:585",
+              "decimals": 2,
+              "format": "currencyUSD",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -211,6 +217,7 @@ data:
               "show": true
             },
             {
+              "$$hashKey": "object:586",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -230,6 +237,7 @@ data:
           "dashLength": 10,
           "dashes": false,
           "datasource": "prometheus",
+          "decimals": 4,
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -266,6 +274,7 @@ data:
               "format": "time_series",
               "interval": "",
               "intervalFactor": 1,
+              "legendFormat": "",
               "refId": "A"
             }
           ],
@@ -288,7 +297,9 @@ data:
           },
           "yaxes": [
             {
-              "format": "short",
+              "$$hashKey": "object:375",
+              "decimals": 2,
+              "format": "currencyUSD",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -296,6 +307,7 @@ data:
               "show": true
             },
             {
+              "$$hashKey": "object:376",
               "format": "short",
               "label": null,
               "logBase": 1,
