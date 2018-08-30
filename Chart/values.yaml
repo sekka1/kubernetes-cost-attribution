@@ -1,6 +1,8 @@
 ---
 namespace: gar
 
+enableGCEBillingAgent: true
+
 billing:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution
