@@ -50,6 +50,26 @@ spec:
           requests:
             cpu: {{ .Values.billing.resources.requests.cpu }}
             memory: {{ .Values.billing.resources.requests.memory }}
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /metrics
+            port: 9101
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /metrics
+            port: 9101
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
         volumeMounts:
         - mountPath: /opt/last-state
           name: last-state

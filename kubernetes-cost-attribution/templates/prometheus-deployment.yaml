@@ -45,11 +45,9 @@ spec:
         imagePullPolicy: "{{ .Values.prometheus.image.pullPolicy }}"
         args: [
           "--config.file=/etc/prometheus/config/config.yml",
-          "--web.external-url=http://prometheus.prod-1.infra.devops.bot",
           "--web.enable-lifecycle",
           "--storage.tsdb.path=/data/prometheus-data",
           "--storage.tsdb.retention=90d",
-
         ]
         ports:
         - name: web
@@ -68,7 +66,26 @@ spec:
           requests:
             cpu: {{ .Values.prometheus.resources.requests.cpu }}
             memory: {{ .Values.prometheus.resources.requests.memory }}
-
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 9090
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /
+            port: 9090
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
       volumes:
       - name: config
         configMap:
