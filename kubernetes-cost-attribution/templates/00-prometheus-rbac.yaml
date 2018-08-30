@@ -2,10 +2,10 @@
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: prometheus-clusterrolebinding
+  name: kca-prometheus-clusterrolebinding
 subjects:
 - kind: ServiceAccount
-  name: prometheus
+  name: kca-prometheus
   namespace: {{ .Values.namespace }}
 roleRef:
   kind: ClusterRole
@@ -16,5 +16,5 @@ roleRef:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: prometheus
+  name: kca-prometheus
   namespace: {{ .Values.namespace }}

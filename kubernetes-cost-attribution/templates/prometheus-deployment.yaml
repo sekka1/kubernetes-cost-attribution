@@ -15,7 +15,7 @@ spec:
       labels:
         app: prometheus
     spec:
-      serviceAccountName: prometheus
+      serviceAccountName: kca-prometheus
       terminationGracePeriodSeconds: 300
       # nodeSelector:
       #   k8s.info/application: infrastructure
