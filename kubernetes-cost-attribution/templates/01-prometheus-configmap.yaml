@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: prometheus-config
+  name: {{ .Values.namePrefix }}-prometheus-config
   namespace: {{ .Values.namespace }}
 data:
   config.yml: |-

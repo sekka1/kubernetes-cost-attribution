@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grafana
+  name: {{ .Values.namePrefix }}-grafana
   namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
@@ -50,10 +50,10 @@ spec:
       volumes:
       - name: grafana-dashboard-config
         configMap:
-          name: grafana-dashboard-config
+          name: {{ .Values.namePrefix }}-grafana-dashboard-config
       - name: grafana-dashboards
         configMap:
-          name: grafana-dashboards
+          name: {{ .Values.namePrefix }}-grafana-dashboards
       - name: grafana-datasource
         configMap:
-          name: grafana-datasource
+          name: {{ .Values.namePrefix }}-grafana-datasource

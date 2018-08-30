@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-datasource
+  name: {{ .Values.namePrefix }}-grafana-datasource
   namespace: {{ .Values.namespace }}
 data:
   datasource.yaml: |-

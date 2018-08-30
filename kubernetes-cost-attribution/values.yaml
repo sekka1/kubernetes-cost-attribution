@@ -1,6 +1,8 @@
 ---
 namespace: gar
 
+namePrefix: cost-attribution
+
 enableGCEBillingAgent: true
 
 billing:

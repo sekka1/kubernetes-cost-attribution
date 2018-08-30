@@ -2,10 +2,10 @@
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
 metadata:
-  name: kca-kube-state-metric-clusterrolebinding
+  name: {{ .Values.namePrefix }}-kube-state-metric-clusterrolebinding
 subjects:
 - kind: ServiceAccount
-  name: kca-kube-state-metric
+  name: {{ .Values.namePrefix }}-kube-state-metric
   namespace: {{ .Values.namespace }}
 roleRef:
   kind: ClusterRole
@@ -16,5 +16,5 @@ roleRef:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: kca-kube-state-metric
+  name: {{ .Values.namePrefix }}-kube-state-metric
   namespace: {{ .Values.namespace }}

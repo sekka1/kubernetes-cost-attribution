@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prometheus
+  name: {{ .Values.namePrefix }}-prometheus
   namespace: {{ .Values.namespace }}
 spec:
   replicas: 1
@@ -15,7 +15,7 @@ spec:
       labels:
         app: prometheus
     spec:
-      serviceAccountName: kca-prometheus
+      serviceAccountName: {{ .Values.namePrefix }}-prometheus
       terminationGracePeriodSeconds: 300
       # nodeSelector:
       #   k8s.info/application: infrastructure
@@ -72,7 +72,7 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: prometheus-config
+          name: {{ .Values.namePrefix }}-prometheus-config
       - name: datadir
         emptyDir: {}
       # - name: rules

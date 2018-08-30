@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: billing
+  name: {{ .Values.namePrefix }}-billing
   namespace: {{ .Values.namespace }}
   labels:
     app: billing
@@ -56,4 +56,4 @@ spec:
       volumes:
       - name: last-state
         configMap:
-          name: last-state
+          name: {{ .Values.namePrefix }}-last-state
