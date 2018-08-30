@@ -10,7 +10,7 @@ spec:
       labels:
         k8s-app: kube-state-metrics
     spec:
-      serviceAccountName: kube-state-metric
+      serviceAccountName: kca-kube-state-metric
       containers:
       - name: kube-state-metrics
         image: "{{ .Values.kubeStateMetrics.image.repository }}:{{ .Values.kubeStateMetrics.image.tag }}"
