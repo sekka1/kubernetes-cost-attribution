@@ -1,11 +1,11 @@
 import sys
 import time
 import traceback
-from src import logger_config
-from src import last_state
-from src import process_bill_cycle
-from src import output_csv
 from time import sleep
+from src import billing
+from src import logger_config
+from prometheus_client import start_http_server, Gauge, Counter
+import schedule
 
 logger = logger_config.logger
 
@@ -23,61 +23,17 @@ promehtheus_info_dict = {
 }
 billing_csv_output_file = sys.argv[4]
 last_state_file_location = sys.argv[5]
-cycles_to_run = int(sys.argv[6])
+start_minutes_ago = int(sys.argv[6])
 
-#####################################
-# Billing cycle
-#####################################
+# Prometheus - Start up the server to expose the metrics.
+start_http_server(9101)
+prometheus_counter = Gauge('kubernetes_cost_attribution', 'namespace cost', ['namespace_name', 'duration'])
 
-cycle_count = 0
-t0 = time.time()
+def job():
+    billing.run(promehtheus_info_dict, start_minutes_ago, billing_csv_output_file, last_state_file_location, prometheus_counter)
 
-while cycle_count < cycles_to_run:
-    # Get last_state.json
-    last_state_dict = last_state.get(last_state_file_location)
+schedule.every(start_minutes_ago).minutes.do(job)
 
-    start_time = last_state_dict['last_poll_time']
-    end_time = last_state.get_next_end_cycle_time(last_state_dict['last_poll_time'])
-
-    logger.info("###########################################")
-    logger.info("###########################################")
-    logger.info("---Starting billing cycle---")
-    logger.info("###########################################")
-    logger.info("###########################################")
-
-    logger.info("Current start poll cycle time: "+str(start_time))
-    logger.info("Next end poll cycle time: "+str(end_time))
-
-    try:
-        # Process this current billing cycle
-        current_billing_cycle_list = process_bill_cycle.process(promehtheus_info_dict, start_time, end_time)
-
-        output_csv.output(billing_csv_output_file, current_billing_cycle_list)
-    except Exception as e:
-        var = traceback.format_exc()
-        logger.error(var)
-        logger.error("Exiting...")
-        sys.exit()
-
-
-    # Setting the new value for the last_state.json file
-    last_state.set(last_state_file_location, end_time)
-
-    logger.info("###########################################")
-    logger.info("###########################################")
-    logger.info("---Ending billing cycle---")
-    logger.info("###########################################")
-    logger.info("###########################################")
-
-    cycle_count += 1
-
-    logger.info("Sleeping for 60 seconds...")
-    sleep(0.2)
-
-# Tracking how long this run took
-t1 = time.time()
-total_time = t1 - t0
-
-logger.info("Total run time (sec): "+str(total_time))
-logger.info("Total run time (min): "+str(total_time/60))
-logger.info("Total run time (hour): "+str(total_time/60/60))
+while True:
+    schedule.run_pending()
+    time.sleep(1)

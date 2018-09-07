@@ -1,0 +1,17 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.namePrefix }}-billing
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: billing
+  annotations:
+    prometheus.io/port: "9101"
+    prometheus.io/scrape: "true"
+spec:
+  ports:
+  - port: 9101
+    protocol: TCP
+  selector:
+    app: billing

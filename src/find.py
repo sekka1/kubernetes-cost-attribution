@@ -65,15 +65,32 @@ def machine_info_by_hostname(kube_node_labels_dict, hostname):
 
     for row in kube_node_labels_dict:
         if row['metric']['label_kubernetes_io_hostname'] == hostname.replace(".ec2.internal", "") or row['metric']['label_kubernetes_io_hostname'] == hostname:
-            print(row)
+            logger.debug(row)
             machine_info_dict = {}
             machine_info_dict['arch'] = row['metric']['label_beta_kubernetes_io_arch']
-            machine_info_dict['instance_type'] = row['metric']['label_k8s_info_instanceType']
+
+            if 'label_k8s_info_instanceType' in row['metric']:
+                machine_info_dict['instance_type'] = row['metric']['label_k8s_info_instanceType']
+            elif 'label_beta_kubernetes_io_instance_type' in row['metric']:
+                machine_info_dict['instance_type'] = row['metric']['label_beta_kubernetes_io_instance_type']
+            else:
+                machine_info_dict['instance_type'] = None
+
             machine_info_dict['os'] = row['metric']['label_beta_kubernetes_io_os']
             machine_info_dict['region'] = row['metric']['label_failure_domain_beta_kubernetes_io_region']
             machine_info_dict['availability_zone'] = row['metric']['label_failure_domain_beta_kubernetes_io_zone']
-            machine_info_dict['hasPublicIP'] = row['metric']['label_k8s_info_hasPublicIP']
-            machine_info_dict['isSpot'] = row['metric']['label_k8s_info_isSpot']
-            machine_info_dict['kops_instancegroup'] = row['metric']['label_kops_k8s_io_instancegroup']
+
+            if 'label_k8s_info_hasPublicIP' in row['metric']:
+                machine_info_dict['hasPublicIP'] = row['metric']['label_k8s_info_hasPublicIP']
+
+            if 'label_k8s_info_isSpot' in row['metric']:
+                machine_info_dict['isSpot'] = row['metric']['label_k8s_info_isSpot']
+            else:
+                machine_info_dict['isSpot'] = "false"
+
+            if 'label_kops_k8s_io_instancegroup' in row['metric']:
+                machine_info_dict['kops_instancegroup'] = row['metric']['label_kops_k8s_io_instancegroup']
+            else:
+                machine_info_dict['kops_instancegroup'] = None
 
     return machine_info_dict

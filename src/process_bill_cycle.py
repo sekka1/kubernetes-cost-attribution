@@ -100,6 +100,10 @@ def process(promehtheus_info_dict, start_time, end_time):
                 print(machine_info_dict)
                 print("============")
 
+                cost_assumptions_memory_percentage = 0.5
+                cost_assumptions_cpu_percentage = 0.5
+                markup = 0
+
                 if machine_info_dict != None:
 
                     machine_spot_or_on_demand = None
@@ -116,10 +120,10 @@ def process(promehtheus_info_dict, start_time, end_time):
                     logger.info("machine type: "+machine_info_dict['instance_type'])
                     logger.info("machine hourly cost: "+str(cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['hourly_cost'][machine_spot_or_on_demand]))
 
-                    logger.info("cost_assumptions_dict memory_percentage: "+str(cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['memory_percentage']))
-                    logger.info("cost_assumptions_dict cpu percentage: "+str(cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['cpu_percentage']))
+                    logger.info("cost_assumptions_dict memory_percentage: "+str(cost_assumptions_memory_percentage))
+                    logger.info("cost_assumptions_dict cpu percentage: "+str(cost_assumptions_cpu_percentage))
 
-                    logger.info("machine mark up: "+str(cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['markup']))
+                    logger.info("machine mark up: "+str(markup))
                     logger.info("ec2 Machine total memory: "+str(cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['memory']))
                     logger.info("ec2 Machine total cpu: "+str(cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['cpu']))
 
@@ -134,9 +138,9 @@ def process(promehtheus_info_dict, start_time, end_time):
                         'machine_spot_or_on_demand': machine_spot_or_on_demand,
                         'instance_type': machine_info_dict['instance_type'],
                         'instance_hourly_cost': cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['hourly_cost'][machine_spot_or_on_demand],
-                        'cost_assumptions_memory_percentage': cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['memory_percentage'],
-                        'cost_assumptions_cpu_percentage': cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['cpu_percentage'],
-                        'instance_markup': cost_assumptions_dict['namespaces'][exported_namespace][machine_info_dict['instance_type']]['markup'],
+                        'cost_assumptions_memory_percentage': cost_assumptions_memory_percentage,
+                        'cost_assumptions_cpu_percentage': cost_assumptions_cpu_percentage,
+                        'instance_markup': markup,
                         'instance_total_memory': cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['memory'],
                         'instance_total_cpu': cost_assumptions_dict['ec2_info'][machine_info_dict['instance_type']]['cpu']
                     }

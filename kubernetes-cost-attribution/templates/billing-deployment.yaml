@@ -1,0 +1,79 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.namePrefix }}-billing
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: billing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: billing
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: billing
+    spec:
+      containers:
+      - name: billing
+        image: "{{ .Values.billing.image.repository }}:{{ .Values.billing.image.tag }}"
+        command:
+          - "sh"
+        args:
+          - "-c"
+          - |
+            python3 pod_usage.py http://{{ .Values.namePrefix }}-prometheus:9090 kube ecOKg7edlfAgVyPx+bLSHu0 /opt/cost-attribution-output/billing-managed-kube.csv /opt/last-state/last_state.json 60
+        env:
+          - name: NAME
+            value: "prod.us-east-1"
+        ports:
+        - containerPort: 9101
+        # resources:
+        #   requests:
+        #     memory: "256Mi"
+        #     cpu: "250m"
+        #   limits:
+        #     memory: "1024Mi"
+        #     cpu: "500m"
+        imagePullPolicy: "{{ .Values.billing.image.pullPolicy }}"
+        resources:
+          limits:
+            cpu: {{ .Values.billing.resources.limits.cpu }}
+            memory: {{ .Values.billing.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.billing.resources.requests.cpu }}
+            memory: {{ .Values.billing.resources.requests.memory }}
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /metrics
+            port: 9101
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /metrics
+            port: 9101
+            scheme: HTTP
+          initialDelaySeconds: 20
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        volumeMounts:
+        - mountPath: /opt/last-state
+          name: last-state
+      volumes:
+      - name: last-state
+        configMap:
+          name: {{ .Values.namePrefix }}-last-state

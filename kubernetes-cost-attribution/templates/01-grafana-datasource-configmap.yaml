@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.namePrefix }}-grafana-datasource
+  namespace: {{ .Values.namespace }}
+data:
+  datasource.yaml: |-
+    # provisioning/datasources/
+    # https://github.com/grafana/grafana/blob/master/docs/sources/administration/provisioning.md#datasources
+    apiVersion: 1
+    datasources:
+    -  access: 'proxy'                       # make grafana perform the requests
+       editable: true                        # whether it should be editable
+       is_default: true                      # whether this should be the default DS
+       name: 'prometheus'                    # name of the datasource
+       org_id: 1                             # id of the organization to tie this datasource to
+       type: 'prometheus'                    # type of the data source
+       url: 'http://{{ .Values.namePrefix }}-prometheus:9090'         # url of the prom instance
+       version: 1
