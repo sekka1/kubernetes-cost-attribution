@@ -24,6 +24,7 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
+      "id": 1,
       "links": [],
       "panels": [
         {
@@ -88,7 +89,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "$$hashKey": "object:144",
+              "$$hashKey": "object:188",
               "expr": "sum(increase(kubernetes_cost_attribution{}[30d]))",
               "format": "time_series",
               "interval": "1d",
@@ -172,7 +173,7 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "$$hashKey": "object:144",
+              "$$hashKey": "object:236",
               "expr": "sum(increase(kubernetes_cost_attribution{}[24h]))",
               "format": "time_series",
               "interval": "24h",
@@ -215,7 +216,6 @@ data:
           },
           "styles": [
             {
-              "$$hashKey": "object:824",
               "alias": "Time",
               "dateFormat": "MMMM D, YYYY LT",
               "link": false,
@@ -223,7 +223,6 @@ data:
               "type": "date"
             },
             {
-              "$$hashKey": "object:825",
               "alias": "",
               "colorMode": null,
               "colors": [
@@ -240,7 +239,7 @@ data:
           ],
           "targets": [
             {
-              "$$hashKey": "object:357",
+              "$$hashKey": "object:284",
               "expr": "sum(increase(kubernetes_cost_attribution{}[30d])) by (namespace_name)",
               "format": "table",
               "interval": "1d",
@@ -274,14 +273,12 @@ data:
           },
           "styles": [
             {
-              "$$hashKey": "object:763",
               "alias": "Time",
               "dateFormat": "MMMM D, YYYY LT",
               "pattern": "Time",
               "type": "date"
             },
             {
-              "$$hashKey": "object:764",
               "alias": "",
               "colorMode": null,
               "colors": [
@@ -298,7 +295,7 @@ data:
           ],
           "targets": [
             {
-              "$$hashKey": "object:522",
+              "$$hashKey": "object:346",
               "expr": "sum(increase(kubernetes_cost_attribution{}[24h])) by (namespace_name)",
               "format": "table",
               "interval": "24h",
@@ -350,8 +347,8 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "$$hashKey": "object:474",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[30d])) by (namespace_name)",
+              "$$hashKey": "object:421",
+              "expr": "sum(increase(kubernetes_cost_attribution{}[1d])) by (namespace_name)",
               "format": "time_series",
               "interval": "1d",
               "intervalFactor": 1,
@@ -377,7 +374,6 @@ data:
           },
           "yaxes": [
             {
-              "$$hashKey": "object:585",
               "decimals": 2,
               "format": "currencyUSD",
               "label": null,
@@ -387,7 +383,6 @@ data:
               "show": true
             },
             {
-              "$$hashKey": "object:586",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -439,7 +434,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "$$hashKey": "object:474",
+              "$$hashKey": "object:489",
               "expr": "sum(increase(kubernetes_cost_attribution{}[24h])) by (namespace_name)",
               "format": "time_series",
               "interval": "1h",
@@ -467,7 +462,6 @@ data:
           },
           "yaxes": [
             {
-              "$$hashKey": "object:375",
               "decimals": 2,
               "format": "currencyUSD",
               "label": null,
@@ -477,7 +471,6 @@ data:
               "show": true
             },
             {
-              "$$hashKey": "object:376",
               "format": "short",
               "label": null,
               "logBase": 1,
@@ -499,7 +492,7 @@ data:
         "list": []
       },
       "time": {
-        "from": "now-24h",
+        "from": "now-30d",
         "to": "now"
       },
       "timepicker": {
