@@ -63,3 +63,8 @@ grafana:
   credentials:
     user: admin
     password: kube-cost-attribution
+  ingress:
+    enable: true
+    ingressClass: nginx
+    enableTlsAcme: true
+    hostname: kca.demo.devops.bot

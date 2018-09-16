@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: grafana
+      app: {{ .Values.namePrefix }}-grafana
   template:
     metadata:
       labels:
-        app: grafana
+        app: {{ .Values.namePrefix }}-grafana
     spec:
       containers:
         - name: grafana
@@ -77,3 +77,18 @@ spec:
       - name: grafana-datasource
         configMap:
           name: {{ .Values.namePrefix }}-grafana-datasource
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.namePrefix }}-grafana
+  name: {{ .Values.namePrefix }}-grafana
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    app: {{ .Values.namePrefix }}-grafana
+  ports:
+  - name: web
+    port: 3000
