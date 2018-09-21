@@ -31,15 +31,10 @@ Follow these instructions to install `Kubernetes Cost Attribution` from the comm
 
 ### Commands
 
-Set environment variables (modify if necessary):
-```
-export APP_INSTANCE_NAME=nginx-1
-export NAMESPACE=default
-```
-
 Expand manifest template:
 ```
-helm template . --set APP_INSTANCE_NAME=$APP_INSTANCE_NAME,NAMESPACE=$NAMESPACE > expanded.yaml
+cd ./Chart/kubernetes-cost-attribution
+helm template . > expanded.yaml
 ```
 
 Run kubectl:
