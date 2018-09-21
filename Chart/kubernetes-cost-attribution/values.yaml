@@ -1,9 +1,10 @@
 ---
-namespace: devops
-
 namePrefix: cost-attribution
 
 enableGCEBillingAgent: true
+
+createNamespace: true
+namespace: kubernetes-cost-attribution
 
 billing:
   image:
@@ -68,3 +69,6 @@ grafana:
     ingressClass: nginx
     enableTlsAcme: true
     hostname: kca.demo.devops.bot
+    annotations:
+      enable: false
+      whitelistSourceRange: "1.1.1.1/32,2.2.2.2/32"
