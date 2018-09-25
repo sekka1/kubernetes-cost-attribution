@@ -240,14 +240,14 @@ data:
           "targets": [
             {
               "$$hashKey": "object:284",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[1d])) by (namespace_name)",
+              "expr": "sum(increase(kubernetes_cost_attribution{}[30d])) by (namespace_name)",
               "format": "table",
-              "interval": "1d",
+              "interval": "30d",
               "intervalFactor": 1,
               "refId": "A"
             }
           ],
-          "timeFrom": "1d",
+          "timeFrom": "30d",
           "title": "Cost: Last 30 Days",
           "transform": "table",
           "type": "table"
@@ -262,6 +262,7 @@ data:
             "x": 12,
             "y": 2
           },
+          "hideTimeOverride": false,
           "id": 4,
           "links": [],
           "pageSize": null,
@@ -298,7 +299,7 @@ data:
               "$$hashKey": "object:346",
               "expr": "sum(increase(kubernetes_cost_attribution{}[24h])) by (namespace_name)",
               "format": "table",
-              "interval": "24h",
+              "interval": "25h",
               "intervalFactor": 1,
               "refId": "A"
             }
