@@ -348,7 +348,7 @@ data:
           "targets": [
             {
               "$$hashKey": "object:421",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[30d])) by (namespace_name)",
+              "expr": "sum(increase(kubernetes_cost_attribution{}[1d])) by (namespace_name)",
               "format": "time_series",
               "interval": "1d",
               "intervalFactor": 1,
