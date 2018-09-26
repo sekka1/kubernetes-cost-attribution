@@ -35,13 +35,6 @@ spec:
             value: "prod.us-east-1"
         ports:
         - containerPort: 9101
-        # resources:
-        #   requests:
-        #     memory: "256Mi"
-        #     cpu: "250m"
-        #   limits:
-        #     memory: "1024Mi"
-        #     cpu: "500m"
         imagePullPolicy: "{{ .Values.billing.image.pullPolicy }}"
         resources:
           limits:
@@ -73,7 +66,53 @@ spec:
         volumeMounts:
         - mountPath: /opt/last-state
           name: last-state
+      {{ if .Values.billing.ubbAgent.enable }}
+      - name: ubbagent
+        image: "{{ .Values.billing.ubbAgent.image.repository }}:{{ .Values.billing.ubbAgent.image.tag }}"
+        imagePullPolicy: "{{ .Values.billing.ubbAgent.image.pullPolicy }}"
+        env:
+          - name: AGENT_CONFIG_FILE
+            value: "/etc/ubbagent/config.yaml"
+          - name: AGENT_LOCAL_PORT
+            value: "4567"
+          - name: AGENT_STATE_DIR
+            value: "/var/lib/ubbagent"
+          - name: ENTITLEMENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: REPORTING_SECRET
+                key: entitlement-id
+          - name: CUNSUMER_ID
+            valueFrom:
+              secretKeyRef:
+                name: REPORTING_SECRET
+                key: consumer-id
+          - name: REPORTING_KEY
+            valueFrom:
+              secretKeyRef:
+                name: REPORTING_SECRET
+                key: reporting-key
+        resources:
+          limits:
+            cpu: {{ .Values.billing.ubbAgent.resources.limits.cpu }}
+            memory: {{ .Values.billing.ubbAgent.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.billing.ubbAgent.resources.requests.cpu }}
+            memory: {{ .Values.billing.ubbAgent.resources.requests.memory }}
+        volumeMounts:
+        - name: ubbagent-config
+          mountPath: /etc/ubbagent
+        - name: ubbagent-state
+          mountPath: "/var/lib/ubbagent"
+      {{ end }}
       volumes:
       - name: last-state
         configMap:
           name: {{ .Values.namePrefix }}-last-state
+      {{ if .Values.billing.ubbAgent.enable }}
+      - name: ubbagent-config
+        configMap:
+          name: {{ .Values.namePrefix }}-ubbagent-config
+      {{ end }}
+      - name: ubbagent-state
+        emptyDir: {}
