@@ -51,7 +51,7 @@ data:
     - name: servicecontrol
       servicecontrol:
         identity: gcp
-        serviceName: some-service-name.myapi.com
+        serviceName: ${AGENT_CONSUMER_ID}
         consumerId: ${CUNSUMER_ID}
 
     # The sources section lists metric data sources run by the agent itself. The currently-supported

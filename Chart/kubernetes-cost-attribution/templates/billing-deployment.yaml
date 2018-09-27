@@ -80,18 +80,23 @@ spec:
           - name: ENTITLEMENT_ID
             valueFrom:
               secretKeyRef:
-                name: REPORTING_SECRET
+                name: {{ .Values.reportingSecretName }}
                 key: entitlement-id
           - name: CUNSUMER_ID
             valueFrom:
               secretKeyRef:
-                name: REPORTING_SECRET
+                name: {{ .Values.reportingSecretName }}
                 key: consumer-id
           - name: REPORTING_KEY
             valueFrom:
               secretKeyRef:
-                name: REPORTING_SECRET
+                name: {{ .Values.reportingSecretName }}
                 key: reporting-key
+          - name: AGENT_CONSUMER_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.reportingSecretName }}
+                key: consumer-id
         resources:
           limits:
             cpu: {{ .Values.billing.ubbAgent.resources.limits.cpu }}
