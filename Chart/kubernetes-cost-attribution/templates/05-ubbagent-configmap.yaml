@@ -1,3 +1,4 @@
+{{ if .Values.billing.ubbAgent.enable }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -65,3 +66,4 @@ data:
           int64Value: 60
         labels:
           auto: true
+{{ end }}
