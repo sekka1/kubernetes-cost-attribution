@@ -1,28 +1,37 @@
-FROM launcher.gcr.io/google/debian9 AS build
+FROM launcher.gcr.io/google/debian9
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends gettext
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    bash \
+    ca-certificates \
+    gettext \
+    jq \
+    python \
+    python-pip \
+    python-setuptools \
+    python-yaml \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
-ADD Chart /tmp/chart
-RUN cd /tmp \
-    && tar -czvf /tmp/chart.tar.gz chart
-ADD apptest/deployer/chart /tmp/test/chart
-RUN cd /tmp/test \
-    && tar -czvf /tmp/test/chart.tar.gz chart/
+RUN pip install wheel \
+    && pip install google-cloud-storage
 
-ADD schema.yaml /tmp/schema.yaml
+RUN wget -q -O /bin/kubectl \
+        https://storage.googleapis.com/kubernetes-release/release/v1.9.0/bin/linux/amd64/kubectl \
+    && chmod 755 /bin/kubectl
 
-# Provide registry prefix and tag for default values for images.
-# ARG REGISTRY
-# ARG TAG
-# RUN cat /tmp/schema.yaml \
-#     | env -i "REGISTRY=$REGISTRY" "TAG=$TAG" envsubst \
-#     > /tmp/schema.yaml.new \
-#     && mv /tmp/schema.yaml.new /tmp/schema.yaml
+RUN mkdir -p /bin/helm-downloaded \
+    && wget -q -O /bin/helm-downloaded/helm.tar.gz \
+        https://storage.googleapis.com/kubernetes-helm/helm-v2.10.0-linux-amd64.tar.gz \
+    && tar -zxvf /bin/helm-downloaded/helm.tar.gz -C /bin/helm-downloaded \
+    && mv /bin/helm-downloaded/linux-amd64/helm /bin/ \
+    && rm -rf /bin/helm-downloaded
 
+COPY marketplace/deployer_helm_base/* /bin/
+COPY marketplace/deployer_util/* /bin/
+ARG VERSION
+RUN echo "$VERSION" > /version
 
-FROM gcr.io/cloud-marketplace-tools/k8s/deployer_helm
-COPY --from=build /tmp/chart.tar.gz /data/chart/
-COPY --from=build /tmp/test/chart.tar.gz /data-test/chart/
-COPY apptest/deployer/schema.yaml /data-test/
-COPY --from=build /tmp/schema.yaml /data/
+RUN mkdir -p /data/chart
+RUN mkdir -p /data-test/chart
+
+ENTRYPOINT ["/bin/bash", "/bin/deploy.sh"]
