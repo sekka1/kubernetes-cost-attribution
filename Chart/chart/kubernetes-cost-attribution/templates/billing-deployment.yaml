@@ -77,26 +77,26 @@ spec:
             value: "4567"
           - name: AGENT_STATE_DIR
             value: "/var/lib/ubbagent"
-          # - name: ENTITLEMENT_ID
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: {{ .Values.reportingSecretName }}
-          #       key: entitlement-id
-          # - name: CUNSUMER_ID
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: {{ .Values.reportingSecretName }}
-          #       key: consumer-id
-          # - name: REPORTING_KEY
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: {{ .Values.reportingSecretName }}
-          #       key: reporting-key
-          # - name: AGENT_CONSUMER_ID
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: {{ .Values.reportingSecretName }}
-          #       key: consumer-id
+          - name: ENTITLEMENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.reportingSecretName }}
+                key: entitlement-id
+          - name: CUNSUMER_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.reportingSecretName }}
+                key: consumer-id
+          - name: REPORTING_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.reportingSecretName }}
+                key: reporting-key
+          - name: AGENT_CONSUMER_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.reportingSecretName }}
+                key: consumer-id
         resources:
           limits:
             cpu: {{ .Values.billing.ubbAgent.resources.limits.cpu }}

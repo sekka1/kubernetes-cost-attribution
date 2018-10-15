@@ -21,7 +21,7 @@ billing:
       cpu: 250m
       memory: 250Mi
   ubbAgent:
-    enable: true
+    enable: false
     image:
       repository: gcr.io/cloud-marketplace-tools/metering/ubbagent
       tag: sha_dfb8b727bd23a7e48b6b4904f4fa2aad43634607
