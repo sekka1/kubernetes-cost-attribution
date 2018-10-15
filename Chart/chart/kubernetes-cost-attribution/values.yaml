@@ -6,6 +6,8 @@ enableGCEBillingAgent: true
 createNamespace: true
 namespace: kubernetes-cost-attribution
 
+enableRBAC: false
+
 billing:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution
@@ -76,7 +78,7 @@ grafana:
     user: admin
     password: kube-cost-attribution
   ingress:
-    enable: true
+    enable: false
     ingressClass: nginx
     enableTlsAcme: true
     hostname: kca.demo.devops.bot

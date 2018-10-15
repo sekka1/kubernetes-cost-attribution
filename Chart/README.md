@@ -3,12 +3,12 @@ Deployer
 
 Building
 ```
-docker build -t gcr.io/managedkube/deployer:dev .
+docker build -t gcr.io/managedkube/kubernetes-cost-attribution/deployer:latest .
 ```
 
 Pushing the container:
 ```
-docker push gcr.io/managedkube/deployer:dev
+docker push gcr.io/managedkube/kubernetes-cost-attribution/deployer:latest
 ```
 
 
