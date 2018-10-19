@@ -10,7 +10,12 @@ spec:
       labels:
         k8s-app: kube-state-metrics
     spec:
+      {{ if .Values.enableRBAC }}
       serviceAccountName: {{ .Values.namePrefix }}-kube-state-metric
+      {{ end }}
+      {{ if .Values.enableRBACGoogleMarketPlace }}
+      serviceAccountName: {{ .Values.controller.serviceAccount }}
+      {{ end }}
       containers:
       - name: kube-state-metrics
         image: "{{ .Values.kubeStateMetrics.image.repository }}:{{ .Values.kubeStateMetrics.image.tag }}"

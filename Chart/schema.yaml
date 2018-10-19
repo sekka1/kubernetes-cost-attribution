@@ -13,16 +13,26 @@ properties:
     type: string
     x-google-marketplace:
       type: REPORTING_SECRET
-  wordpressImage:
+  billingImage:
     type: string
-    default: gcr.io/partner-project/wordpress:1.0
+    default: gcr.io/managedkube/kubernetes-cost-attribution:refactor-namespaces
     x-google-marketplace:
       type: IMAGE
   ubbAgentImage:
     type: string
-    default: gcr.io/partner-project/wordpress/ubbagent:1.0
+    default: gcr.io/cloud-marketplace-tools/metering/ubbagent
     x-google-marketplace:
       type: IMAGE
+  controller.serviceAccount:
+    type: string
+    x-google-marketplace:
+      type: SERVICE_ACCOUNT
+      serviceAccount:
+        roles:
+        - type: ClusterRole
+          rulesType: PREDEFINED
+          rulesFromRoleName: edit
 required:
 - name
 - namespace
+- controller.serviceAccount

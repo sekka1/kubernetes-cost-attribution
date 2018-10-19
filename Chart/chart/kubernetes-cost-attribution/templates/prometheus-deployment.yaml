@@ -15,7 +15,12 @@ spec:
       labels:
         app: prometheus
     spec:
+      {{ if .Values.enableRBAC }}
       serviceAccountName: {{ .Values.namePrefix }}-prometheus
+      {{ end }}
+      {{ if .Values.enableRBACGoogleMarketPlace }}
+      serviceAccountName: {{ .Values.controller.serviceAccount }}
+      {{ end }}
       terminationGracePeriodSeconds: 300
       # nodeSelector:
       #   k8s.info/application: infrastructure
