@@ -12,7 +12,7 @@ enableRBACGoogleMarketPlace: true
 billing:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution
-    tag: refactor-namespaces
+    tag: 1.0.0
     pullPolicy: Always
   resources:
     limits:
