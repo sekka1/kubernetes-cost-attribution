@@ -299,7 +299,7 @@ data:
               "$$hashKey": "object:346",
               "expr": "sum(increase(kubernetes_cost_attribution{}[24h])) by (namespace_name)",
               "format": "table",
-              "interval": "25h",
+              "interval": "24h",
               "intervalFactor": 1,
               "refId": "A"
             }
@@ -436,7 +436,7 @@ data:
           "targets": [
             {
               "$$hashKey": "object:489",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[24h])) by (namespace_name)",
+              "expr": "sum(increase(kubernetes_cost_attribution{}[1h])) by (namespace_name)",
               "format": "time_series",
               "interval": "1h",
               "intervalFactor": 1,
