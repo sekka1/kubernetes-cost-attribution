@@ -19,7 +19,9 @@ spec:
       in your Kubernetes cluster.
 
       # Support
-      https://managedkube.com/contact
+      Feel free to contact us with any questions or comments that you have.
+
+      email: support@managedkube.com
     maintainers:
     - name: ManagedKube.com
       url: https://www.managedkube.com
@@ -29,12 +31,17 @@ spec:
     notes: |-
       # Access to the dashboard
 
+      To access the dashboard you will need to expose it externally to the internet.
+      You can do this by creation a load balancer to access the dashboard.
+
       You might need to change the namespace name depending on where you deployed it to
+
       ```
       export NAMESPACE=default
       ```
 
       Enable the load balancer:
+
       ```
       kubectl patch service/"cost-attribution-grafana" \
       --namespace "$NAMESPACE" \
@@ -44,6 +51,7 @@ spec:
       Wait 5 minutes for GCP to create the Load Balancer.
 
       Get the URL:
+
       ```
       echo http://$(kubectl -n $NAMESPACE get service -l app=cost-attribution-grafana -o jsonpath="{.items[0].status.loadBalancer.ingress[0].ip}"):3000
       ```
