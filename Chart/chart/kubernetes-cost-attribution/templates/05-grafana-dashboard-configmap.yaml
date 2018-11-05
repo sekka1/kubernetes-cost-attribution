@@ -484,6 +484,19 @@ data:
             "align": false,
             "alignLevel": null
           }
+        },
+        {
+          "content": "# Contact Us\nFeel free to contact us with any questions or comments.  We would love to hear from you.\n\nsupport@managedkube.com\n",
+          "gridPos": {
+            "h": 4,
+            "w": 24,
+            "x": 0,
+            "y": 21
+          },
+          "id": 12,
+          "mode": "markdown",
+          "title": "Panel Title",
+          "type": "text"
         }
       ],
       "schemaVersion": 16,
