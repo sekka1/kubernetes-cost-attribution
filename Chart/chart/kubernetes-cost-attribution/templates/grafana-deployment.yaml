@@ -91,7 +91,12 @@ spec:
     app: {{ .Values.namePrefix }}-grafana
   ports:
   - name: web
+    {{ if .Values.grafana.enableLoadbalancer }}
+    port: 80
+    {{ else }}
     port: 3000
+    {{ end }}
+    targetPort: 3000
   {{ if .Values.grafana.enableLoadbalancer }}
   type: LoadBalancer
   {{ end }}
