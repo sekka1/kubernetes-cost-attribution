@@ -80,22 +80,22 @@ spec:
           - name: ENTITLEMENT_ID
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.reportingSecretName }}
+                name: {{ .Values.reportingSecret }}
                 key: entitlement-id
           - name: CUNSUMER_ID
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.reportingSecretName }}
+                name: {{ .Values.reportingSecret }}
                 key: consumer-id
           - name: REPORTING_KEY
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.reportingSecretName }}
+                name: {{ .Values.reportingSecret }}
                 key: reporting-key
           - name: AGENT_CONSUMER_ID
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.reportingSecretName }}
+                name: {{ .Values.reportingSecret }}
                 key: consumer-id
         resources:
           limits:

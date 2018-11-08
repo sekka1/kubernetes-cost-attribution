@@ -18,26 +18,26 @@ data:
     # The metrics section defines the metric names and types that the agent
     # is configured to record.
     metrics:
-    - name: requests
-      type: int
+    # - name: requests
+    #   type: int
+    #
+    #   # The endpoints section of a metric defines which endpoints the metric data is sent to.
+    #   endpoints:
+    #   - name: on_disk
+    #   - name: servicecontrol
+    #
+    #   # The aggregation section indicates that reports that the agent receives for this metric should
+    #   # be aggregated for a specified period of time prior to being sent to the reporting endpoint.
+    #   aggregation:
+    #     bufferSeconds: 60
 
-      # The endpoints section of a metric defines which endpoints the metric data is sent to.
-      endpoints:
-      - name: on_disk
-      - name: servicecontrol
-
-      # The aggregation section indicates that reports that the agent receives for this metric should
-      # be aggregated for a specified period of time prior to being sent to the reporting endpoint.
-      aggregation:
-        bufferSeconds: 60
-
-    - name: instance-seconds
+    - name: container-time
       type: int
       # The empty passthrough second indicates that no aggregation should occur for this metric.
       # Reports received are immediately sent to the reporting endpoint.
       passthrough: {}
       endpoints:
-      - name: on_disk
+      # - name: on_disk
       - name: servicecontrol
 
     # The endpoints section defines where metering data is ultimately sent. Currently
@@ -45,14 +45,14 @@ data:
     # * disk - some directory on the local filesystem
     # * servicecontrol - Google Service Control: https://cloud.google.com/service-control/overview
     endpoints:
-    - name: on_disk
-      disk:
-        reportDir: /var/ubbagent/reports
-        expireSeconds: 3600
+    # - name: on_disk
+    #   disk:
+    #     reportDir: /var/ubbagent/reports
+    #     expireSeconds: 3600
     - name: servicecontrol
       servicecontrol:
         identity: gcp
-        serviceName: ${AGENT_CONSUMER_ID}
+        serviceName: kubernetes-cost-attribution.mp-managedkube-public.appspot.com
         consumerId: ${CUNSUMER_ID}
 
     # The sources section lists metric data sources run by the agent itself. The currently-supported

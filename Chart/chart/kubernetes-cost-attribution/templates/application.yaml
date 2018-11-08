@@ -1,4 +1,5 @@
 # example: https://github.com/GoogleCloudPlatform/click-to-deploy/blob/614cea698f6974eb1c5aaeaee714b4631a0f3eee/k8s/cassandra/manifest/application.yaml.template#L88
+# doc: https://github.com/kubernetes-sigs/application
 ---
 apiVersion: app.k8s.io/v1beta1
 kind: Application
@@ -11,6 +12,12 @@ metadata:
   labels:
     app.kubernetes.io/name: "{{ .Release.Name }}"
 spec:
+  info:
+    - name: Kubernetes Cost Attribution External IP
+      type: Reference
+      valueFrom:
+        serviceRef:
+          name: "{{ .Values.namePrefix }}-grafana"
   descriptor:
     type: Kubernetes-Cost-Attribution
     versions: '1'

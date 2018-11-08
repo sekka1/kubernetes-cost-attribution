@@ -92,3 +92,6 @@ spec:
   ports:
   - name: web
     port: 3000
+  {{ if .Values.grafana.enableLoadbalancer }}
+  type: LoadBalancer
+  {{ end }}

@@ -9,6 +9,8 @@ namespace: kubernetes-cost-attribution
 enableRBAC: false
 enableRBACGoogleMarketPlace: true
 
+reportingSecret: test-secret
+
 billing:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution
@@ -22,7 +24,7 @@ billing:
       cpu: 250m
       memory: 250Mi
   ubbAgent:
-    enable: false
+    enable: true
     image:
       repository: gcr.io/cloud-marketplace-tools/metering/ubbagent
       tag: sha_dfb8b727bd23a7e48b6b4904f4fa2aad43634607
@@ -78,6 +80,7 @@ grafana:
   credentials:
     user: admin
     password: kube-cost-attribution
+  enableLoadbalancer: true
   ingress:
     enable: false
     ingressClass: nginx
