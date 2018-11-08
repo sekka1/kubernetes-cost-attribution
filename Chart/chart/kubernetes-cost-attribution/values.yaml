@@ -27,7 +27,7 @@ billing:
     enable: true
     image:
       repository: gcr.io/managedkube/ubbagent
-      tag: sha_dfb8b727bd23a7e48b6b4904f4fa2aad43634607
+      tag: 1.0
       pullPolicy: Always
     resources:
       limits:
