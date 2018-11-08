@@ -20,7 +20,7 @@ properties:
       type: IMAGE
   ubbAgentImage:
     type: string
-    default: gcr.io/cloud-marketplace-tools/metering/ubbagent
+    default: gcr.io/managedkube/ubbagent:sha_dfb8b727bd23a7e48b6b4904f4fa2aad43634607
     x-google-marketplace:
       type: IMAGE
   controller.serviceAccount:
