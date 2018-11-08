@@ -38,7 +38,7 @@ billing:
         memory: 25Mi
 prometheus:
   image:
-    repository: prom/prometheus
+    repository: gcr.io/managedkube/kubernetes-cost-attribution/prometheus
     tag: v2.2.1
     pullPolicy: Always
   resources:
@@ -54,7 +54,7 @@ prometheus:
 
 kubeStateMetrics:
   image:
-    repository: k8s.gcr.io/kube-state-metrics
+    repository: gcr.io/managedkube/kubernetes-cost-attribution/kube-state-metrics
     tag: v1.3.1
     pullPolicy: Always
   resources:
@@ -67,7 +67,7 @@ kubeStateMetrics:
 
 grafana:
   image:
-    repository: grafana/grafana
+    repository: gcr.io/managedkube/kubernetes-cost-attribution/grafana
     tag: 5.1.2
     pullPolicy: Always
   resources:
