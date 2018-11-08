@@ -15,7 +15,7 @@ properties:
       type: REPORTING_SECRET
   billingImage:
     type: string
-    default: gcr.io/managedkube/kubernetes-cost-attribution:1.0.0
+    default: gcr.io/managedkube/kubernetes-cost-attribution:1.0
     x-google-marketplace:
       type: IMAGE
   ubbAgentImage:

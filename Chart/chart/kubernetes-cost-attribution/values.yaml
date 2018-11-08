@@ -14,7 +14,7 @@ reportingSecret: test-secret
 billing:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution
-    tag: 1.0.0
+    tag: 1.0
     pullPolicy: Always
   resources:
     limits:
