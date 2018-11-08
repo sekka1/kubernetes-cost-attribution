@@ -159,7 +159,7 @@ func update(clientset *kubernetes.Clientset) {
 				glog.V(3).Infof("Found container: %s", c.Name)
 				//fmt.Println(reflect.TypeOf(c.Resources.Limits.Memory))
 				//fmt.Println(reflect.TypeOf(c))
-				//PrettyPrint(c.Resources.Limits.Memory)
+				PrettyPrint(c.Resources.Limits)
 				//fmt.Println(c.Resources.Limits.Memory.Value())
 				// for k, l := range c.Resources.Limits {
 				// 	fmt.Println(k)
@@ -234,6 +234,8 @@ func update(clientset *kubernetes.Clientset) {
 // ceiling of the value.
 func convertResourceCPUToInt(cpu *resource.Quantity, divisor resource.Quantity) (int64, error) {
 	c := int64(math.Ceil(float64(cpu.MilliValue()) / float64(divisor.MilliValue())))
+	//b := float64(math.Ceil(float64(cpu.Value()) / float64(divisor.Value())))
+	fmt.Println(cpu.MilliValue())
 	return c, nil
 }
 
