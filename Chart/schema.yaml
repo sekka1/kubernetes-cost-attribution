@@ -20,7 +20,7 @@ properties:
       type: IMAGE
   ubbAgentImage:
     type: string
-    default: gcr.io/managedkube/ubbagent:1.0
+    default: gcr.io/managedkube/kubernetes-cost-attribution/ubbagent:1.0
     x-google-marketplace:
       type: IMAGE
   controller.serviceAccount:
