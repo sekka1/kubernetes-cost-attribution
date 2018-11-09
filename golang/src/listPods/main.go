@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math"
 	"net/http"
+	"reflect"
 	"strconv"
 	"time"
 
@@ -124,6 +125,8 @@ func update(clientset *kubernetes.Clientset) {
 			return
 		}
 
+		fmt.Println(reflect.TypeOf(nodes))
+
 		for _, n := range nodes.Items {
 			//PrettyPrint(n.Status.Capacity)
 			glog.V(3).Infof("Found nodes: %s/%s", n.Name, n.UID)
@@ -154,74 +157,75 @@ func update(clientset *kubernetes.Clientset) {
 		}
 
 		for _, p := range pods.Items {
-			//PrettyPrint(p)
-			//fmt.Println(reflect.TypeOf(p.Spec.Containers))
-			glog.V(3).Infof("Found pods: %s/%s/%s/%s", p.Namespace, p.Name, p.UID, p.Spec.NodeName)
+			if p.Status.Phase == "Running" {
+				//PrettyPrint(p)
+				//fmt.Println(reflect.TypeOf(p.Spec.Containers))
+				glog.V(3).Infof("Found pods: %s/%s/%s/%s", p.Namespace, p.Name, p.UID, p.Spec.NodeName)
 
-			for _, c := range p.Spec.Containers {
-				glog.V(3).Infof("Found container: %s", c.Name)
-				//fmt.Println(reflect.TypeOf(c.Resources.Limits.Memory))
-				//fmt.Println(reflect.TypeOf(c))
-				PrettyPrint(c.Resources.Limits)
-				//fmt.Println(c.Resources.Limits.Memory.Value())
-				// for k, l := range c.Resources.Limits {
-				// 	fmt.Println(k)
-				// 	fmt.Println(l)
-				// 	// PrettyPrint(k)
-				// 	// PrettyPrint(l)
-				// }
+				for _, c := range p.Spec.Containers {
+					glog.V(3).Infof("Found container: %s", c.Name)
+					//fmt.Println(reflect.TypeOf(c.Resources.Limits.Memory))
+					//fmt.Println(reflect.TypeOf(c))
+					//PrettyPrint(c.Resources.Limits)
+					//fmt.Println(c.Resources.Limits.Memory.Value())
+					// for k, l := range c.Resources.Limits {
+					// 	fmt.Println(k)
+					// 	fmt.Println(l)
+					// 	// PrettyPrint(k)
+					// 	// PrettyPrint(l)
+					// }
 
-				fmt.Println("xxx")
-				fmt.Println(c.Resources.Limits.Cpu().MilliValue())
+					var cpuLimit int64 = c.Resources.Limits.Cpu().MilliValue()
+					var cpuRequest int64 = c.Resources.Requests.Cpu().MilliValue()
+					var memoryLimit int64 = c.Resources.Limits.Memory().Value()
+					var memoryRequest int64 = c.Resources.Requests.Memory().Value()
 
-				var cpuLimit int64 = c.Resources.Limits.Cpu().MilliValue()
-				var cpuRequest int64 = c.Resources.Requests.Cpu().MilliValue()
-				var memoryLimit int64 = c.Resources.Limits.Memory().Value()
-				var memoryRequest int64 = c.Resources.Requests.Memory().Value()
+					// cpuLimit, err := convertResourceCPUToInt(c.Resources.Limits.Cpu(), divisor)
+					// if err != nil {
+					// 	glog.Errorf("Failed to get CPU limits: %v", err)
+					// 	return
+					// }
 
-				// cpuLimit, err := convertResourceCPUToInt(c.Resources.Limits.Cpu(), divisor)
-				// if err != nil {
-				// 	glog.Errorf("Failed to get CPU limits: %v", err)
-				// 	return
-				// }
+					// cpuRequest, err := convertResourceCPUToInt(c.Resources.Requests.Cpu(), divisor)
+					// if err != nil {
+					// 	glog.Errorf("Failed to get CPU request: %v", err)
+					// 	return
+					// }
 
-				// cpuRequest, err := convertResourceCPUToInt(c.Resources.Requests.Cpu(), divisor)
-				// if err != nil {
-				// 	glog.Errorf("Failed to get CPU request: %v", err)
-				// 	return
-				// }
+					// memoryLimit, err := convertResourceMemoryToInt(c.Resources.Limits.Memory(), divisor)
+					// if err != nil {
+					// 	glog.Errorf("Failed to get memory limits: %v", err)
+					// 	return
+					// }
+					//
+					// memoryRequest, err := convertResourceMemoryToInt(c.Resources.Requests.Memory(), divisor)
+					// if err != nil {
+					// 	glog.Errorf("Failed to get memory requests: %v", err)
+					// 	return
+					// }
 
-				// memoryLimit, err := convertResourceMemoryToInt(c.Resources.Limits.Memory(), divisor)
-				// if err != nil {
-				// 	glog.Errorf("Failed to get memory limits: %v", err)
-				// 	return
-				// }
-				//
-				// memoryRequest, err := convertResourceMemoryToInt(c.Resources.Requests.Memory(), divisor)
-				// if err != nil {
-				// 	glog.Errorf("Failed to get memory requests: %v", err)
-				// 	return
-				// }
+					glog.V(3).Infof("CPU Limit: %s", strconv.FormatInt(cpuLimit, 10))
+					glog.V(3).Infof("Memory Limit: %s", strconv.FormatInt(memoryLimit, 10))
+					glog.V(3).Infof("CPU Requests: %s", strconv.FormatInt(cpuRequest, 10))
+					glog.V(3).Infof("Memory Requests: %s", strconv.FormatInt(memoryRequest, 10))
 
-				glog.V(3).Infof("CPU Limit: %s", strconv.FormatInt(cpuLimit, 10))
-				glog.V(3).Infof("Memory Limit: %s", strconv.FormatInt(memoryLimit, 10))
-				glog.V(3).Infof("CPU Requests: %s", strconv.FormatInt(cpuRequest, 10))
-				glog.V(3).Infof("Memory Requests: %s", strconv.FormatInt(memoryRequest, 10))
+					//fmt.Println(reflect.TypeOf(cpuLimit))
 
-				//fmt.Println(reflect.TypeOf(cpuLimit))
+					nodeInfo := getNodeInfo(nodes, p.Spec.NodeName)
 
-				var computeCostPerHour float64 = 0.0475
-				var nodeCapacityMemory int64 = 3878510592
-				var nodeCapacityCpu int64 = 1000
-				var podUsageMemory int64 = memoryLimit
-				var podUsageCpu int64 = cpuLimit
+					var computeCostPerHour float64 = 0.0475
+					var nodeCapacityMemory int64 = nodeInfo.memoryCapacity
+					var nodeCapacityCpu int64 = nodeInfo.cpuCapacity
+					var podUsageMemory int64 = memoryLimit
+					var podUsageCpu int64 = cpuLimit
 
-				cost := calculatePodCost(computeCostPerHour, nodeCapacityMemory, nodeCapacityCpu, podUsageMemory, podUsageCpu)
+					cost := calculatePodCost(computeCostPerHour, nodeCapacityMemory, nodeCapacityCpu, podUsageMemory, podUsageCpu)
 
-				podCostMetric.With(prometheus.Labels{"namespace_name": p.Namespace, "pod_name": p.Name, "duration": "minute"}).Set(cost.minuteCpu + cost.minuteMemory)
+					podCostMetric.With(prometheus.Labels{"namespace_name": p.Namespace, "pod_name": p.Name, "duration": "minute"}).Set(cost.minuteCpu + cost.minuteMemory)
 
-				// Add this pod to the total
-				namespaceCostMap[p.Namespace] += cost.minuteCpu + cost.minuteMemory
+					// Add this pod to the total
+					namespaceCostMap[p.Namespace] += cost.minuteCpu + cost.minuteMemory
+				}
 			}
 
 		}
@@ -287,6 +291,17 @@ type podCost struct {
 	monthCpu     float64
 }
 
+type nodeInfo struct {
+	name               string
+	cpuCapacity        int64
+	memoryCapacity     int64
+	computeCostPerHour float64
+}
+
+type nodeInfoList struct {
+	nodeInfo []nodeInfo
+}
+
 func calculatePodCost(computeCostPerHour float64, nodeCapacityMemory int64, nodeCapacityCpu int64, podUsageMemory int64, podUsageCpu int64) podCost {
 
 	cost := podCost{}
@@ -294,8 +309,8 @@ func calculatePodCost(computeCostPerHour float64, nodeCapacityMemory int64, node
 	computeCostPerHourMemory := computeCostPerHour * 0.5
 	computeCostPerHourCpu := computeCostPerHour * 0.5
 
-	percentUsedMemory := podUsageMemory / nodeCapacityMemory
-	percentUsedCpu := podUsageCpu / nodeCapacityCpu
+	percentUsedMemory := float64(podUsageMemory) / float64(nodeCapacityMemory)
+	percentUsedCpu := float64(podUsageCpu) / float64(nodeCapacityCpu)
 
 	cost.hourMemory = computeCostPerHourMemory * float64(percentUsedMemory)
 	cost.hourCpu = computeCostPerHourCpu * float64(percentUsedCpu)
@@ -322,6 +337,21 @@ func calculatePodCost(computeCostPerHour float64, nodeCapacityMemory int64, node
 	glog.V(3).Infof("Cost per month cpu: %s", strconv.FormatFloat(cost.monthCpu, 'f', 6, 64))
 
 	return cost
+}
+
+func getNodeInfo(nodes *v1.NodeList, nodeName string) nodeInfo {
+
+	info := nodeInfo{}
+
+	for _, n := range nodes.Items {
+		if n.Name == nodeName {
+			info.name = n.Name
+			info.cpuCapacity = n.Status.Capacity.Cpu().MilliValue()
+			info.memoryCapacity = n.Status.Capacity.Memory().Value()
+		}
+	}
+
+	return info
 }
 
 var (
