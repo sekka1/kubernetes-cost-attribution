@@ -33,6 +33,37 @@ properties:
           splitByColon:
             before: billing.ubbAgent.image.repository
             after: billing.ubbAgent.image.tag
+  kubeStateMetricsImage:
+    type: string
+    default: gcr.io/managedkube/kubernetes-cost-attribution/kube-state-metrics:v1.3.1
+    x-google-marketplace:
+      type: IMAGE
+      image:
+        generatedProperties:
+          splitByColon:
+            before: kubeStateMetrics.image.repository
+            after: kubeStateMetrics.image.tag
+  prometheusImage:
+    type: string
+    default: gcr.io/managedkube/kubernetes-cost-attribution/prometheus:v2.2.1
+    x-google-marketplace:
+      type: IMAGE
+      image:
+        generatedProperties:
+          splitByColon:
+            before: prometheus.image.repository
+            after: prometheus.image.tag
+  grafanaImage:
+    type: string
+    default: gcr.io/managedkube/kubernetes-cost-attribution/grafana:5.1.2
+    x-google-marketplace:
+      type: IMAGE
+      image:
+        generatedProperties:
+          splitByColon:
+            before: grafana.image.repository
+            after: grafana.image.tag
+
   controller.serviceAccount:
     type: string
     x-google-marketplace:
