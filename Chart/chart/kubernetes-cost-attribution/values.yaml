@@ -14,7 +14,7 @@ reportingSecret: test-secret
 billing:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution
-    tag: 1.0
+    tag: "1.0"
     pullPolicy: Always
   resources:
     limits:
@@ -27,7 +27,7 @@ billing:
     enable: true
     image:
       repository: gcr.io/managedkube/kubernetes-cost-attribution/ubbagent
-      tag: 1.0
+      tag: "1.0"
       pullPolicy: Always
     resources:
       limits:
@@ -39,7 +39,7 @@ billing:
 prometheus:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution/prometheus
-    tag: v2.2.1
+    tag: "v2.2.1"
     pullPolicy: Always
   resources:
     limits:
@@ -55,7 +55,7 @@ prometheus:
 kubeStateMetrics:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution/kube-state-metrics
-    tag: v1.3.1
+    tag: "v1.3.1"
     pullPolicy: Always
   resources:
     limits:
@@ -68,7 +68,7 @@ kubeStateMetrics:
 grafana:
   image:
     repository: gcr.io/managedkube/kubernetes-cost-attribution/grafana
-    tag: 5.1.2
+    tag: "5.1.2"
     pullPolicy: Always
   resources:
     limits:

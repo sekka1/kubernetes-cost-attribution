@@ -18,11 +18,21 @@ properties:
     default: gcr.io/managedkube/kubernetes-cost-attribution:1.0
     x-google-marketplace:
       type: IMAGE
+      image:
+        generatedProperties:
+          splitByColon:
+            before: billing.image.repository
+            after: billing.image.tag
   ubbAgentImage:
     type: string
     default: gcr.io/managedkube/kubernetes-cost-attribution/ubbagent:1.0
     x-google-marketplace:
       type: IMAGE
+      image:
+        generatedProperties:
+          splitByColon:
+            before: billing.ubbAgent.image.repository
+            after: billing.ubbAgent.image.tag
   controller.serviceAccount:
     type: string
     x-google-marketplace:
