@@ -13,6 +13,14 @@ properties:
     type: string
     x-google-marketplace:
       type: REPORTING_SECRET
+  # grafana.credentials.user:
+  #   type: string
+  #   x-google-marketplace:
+  #    type: NAME
+  # grafana.credentials.password:
+  #   type: string
+  #   x-google-marketplace:
+  #    type: NAME
   billingImage:
     type: string
     default: gcr.io/managedkube/kubernetes-cost-attribution:1.0
@@ -35,7 +43,7 @@ properties:
             after: billing.ubbAgent.image.tag
   kubeStateMetricsImage:
     type: string
-    default: gcr.io/managedkube/kubernetes-cost-attribution/kube-state-metrics:v1.3.1
+    default: gcr.io/managedkube/kubernetes-cost-attribution/kube-state-metrics:1.0
     x-google-marketplace:
       type: IMAGE
       image:
@@ -45,7 +53,7 @@ properties:
             after: kubeStateMetrics.image.tag
   prometheusImage:
     type: string
-    default: gcr.io/managedkube/kubernetes-cost-attribution/prometheus:v2.2.1
+    default: gcr.io/managedkube/kubernetes-cost-attribution/prometheus:1.0
     x-google-marketplace:
       type: IMAGE
       image:
@@ -55,7 +63,7 @@ properties:
             after: prometheus.image.tag
   grafanaImage:
     type: string
-    default: gcr.io/managedkube/kubernetes-cost-attribution/grafana:5.1.2
+    default: gcr.io/managedkube/kubernetes-cost-attribution/grafana:1.0
     x-google-marketplace:
       type: IMAGE
       image:
