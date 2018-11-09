@@ -13,14 +13,18 @@ properties:
     type: string
     x-google-marketplace:
       type: REPORTING_SECRET
-  # grafana.credentials.user:
-  #   type: string
-  #   x-google-marketplace:
-  #    type: NAME
-  # grafana.credentials.password:
-  #   type: string
-  #   x-google-marketplace:
-  #    type: NAME
+  grafana.credentials.user:
+    type: string
+    title: admin username
+    description: Username for the dashboard
+    default: admin
+  # https://github.com/GoogleCloudPlatform/marketplace-k8s-app-tools/blob/master/docs/schema.md#type-generated_password
+  grafana.credentials.password:
+    type: string
+    x-google-marketplace:
+      type: GENERATED_PASSWORD
+      generatedPassword:
+        length: 32
   billingImage:
     type: string
     default: gcr.io/managedkube/kubernetes-cost-attribution:1.0
