@@ -31,7 +31,7 @@ data:
     #   aggregation:
     #     bufferSeconds: 60
 
-    - name: container-time
+    - name: container_time
       type: int
       # The empty passthrough second indicates that no aggregation should occur for this metric.
       # Reports received are immediately sent to the reporting endpoint.
@@ -58,9 +58,9 @@ data:
     # The sources section lists metric data sources run by the agent itself. The currently-supported
     # source is 'heartbeat', which sends a defined value to a metric at a defined interval.
     sources:
-    - name: instance-seconds
+    - name: container_time
       heartbeat:
-        metric: instance-seconds
+        metric: container_time
         intervalSeconds: 60
         value:
           int64Value: 60
