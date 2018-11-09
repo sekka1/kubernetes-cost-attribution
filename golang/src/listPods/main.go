@@ -112,8 +112,8 @@ func PrettyPrint(v interface{}) (err error) {
 
 func update(clientset *kubernetes.Clientset) {
 
-	divisor := resource.Quantity{}
-	divisor = resource.MustParse("1")
+	// divisor := resource.Quantity{}
+	// divisor = resource.MustParse("1")
 
 	namespaceCostMap := make(map[string]float64)
 
@@ -128,17 +128,20 @@ func update(clientset *kubernetes.Clientset) {
 			//PrettyPrint(n.Status.Capacity)
 			glog.V(3).Infof("Found nodes: %s/%s", n.Name, n.UID)
 
-			nodeCpuCapacity, err := convertResourceCPUToInt(n.Status.Capacity.Cpu(), divisor)
-			if err != nil {
-				glog.Errorf("Failed to get node CPU capcity: %v", err)
-				return
-			}
+			var nodeCpuCapacity int64 = n.Status.Capacity.Cpu().MilliValue()
+			var nodeMemoryCapcity int64 = n.Status.Capacity.Memory().Value()
 
-			nodeMemoryCapcity, err := convertResourceMemoryToInt(n.Status.Capacity.Memory(), divisor)
-			if err != nil {
-				glog.Errorf("Failed to get node Memory capacity: %v", err)
-				return
-			}
+			// nodeCpuCapacity, err := convertResourceCPUToInt(n.Status.Capacity.Cpu(), divisor)
+			// if err != nil {
+			// 	glog.Errorf("Failed to get node CPU capcity: %v", err)
+			// 	return
+			// }
+			//
+			// nodeMemoryCapcity, err := convertResourceMemoryToInt(n.Status.Capacity.Memory(), divisor)
+			// if err != nil {
+			// 	glog.Errorf("Failed to get node Memory capacity: %v", err)
+			// 	return
+			// }
 
 			glog.V(3).Infof("Node CPU Capacity: %s", strconv.FormatInt(nodeCpuCapacity, 10))
 			glog.V(3).Infof("Node Memory Capacity: %s", strconv.FormatInt(nodeMemoryCapcity, 10))
@@ -168,29 +171,37 @@ func update(clientset *kubernetes.Clientset) {
 				// 	// PrettyPrint(l)
 				// }
 
-				cpuLimit, err := convertResourceCPUToInt(c.Resources.Limits.Cpu(), divisor)
-				if err != nil {
-					glog.Errorf("Failed to get CPU limits: %v", err)
-					return
-				}
+				fmt.Println("xxx")
+				fmt.Println(c.Resources.Limits.Cpu().MilliValue())
 
-				cpuRequest, err := convertResourceCPUToInt(c.Resources.Requests.Cpu(), divisor)
-				if err != nil {
-					glog.Errorf("Failed to get CPU request: %v", err)
-					return
-				}
+				var cpuLimit int64 = c.Resources.Limits.Cpu().MilliValue()
+				var cpuRequest int64 = c.Resources.Requests.Cpu().MilliValue()
+				var memoryLimit int64 = c.Resources.Limits.Memory().Value()
+				var memoryRequest int64 = c.Resources.Requests.Memory().Value()
 
-				memoryLimit, err := convertResourceMemoryToInt(c.Resources.Limits.Memory(), divisor)
-				if err != nil {
-					glog.Errorf("Failed to get memory limits: %v", err)
-					return
-				}
+				// cpuLimit, err := convertResourceCPUToInt(c.Resources.Limits.Cpu(), divisor)
+				// if err != nil {
+				// 	glog.Errorf("Failed to get CPU limits: %v", err)
+				// 	return
+				// }
 
-				memoryRequest, err := convertResourceMemoryToInt(c.Resources.Requests.Memory(), divisor)
-				if err != nil {
-					glog.Errorf("Failed to get memory requests: %v", err)
-					return
-				}
+				// cpuRequest, err := convertResourceCPUToInt(c.Resources.Requests.Cpu(), divisor)
+				// if err != nil {
+				// 	glog.Errorf("Failed to get CPU request: %v", err)
+				// 	return
+				// }
+
+				// memoryLimit, err := convertResourceMemoryToInt(c.Resources.Limits.Memory(), divisor)
+				// if err != nil {
+				// 	glog.Errorf("Failed to get memory limits: %v", err)
+				// 	return
+				// }
+				//
+				// memoryRequest, err := convertResourceMemoryToInt(c.Resources.Requests.Memory(), divisor)
+				// if err != nil {
+				// 	glog.Errorf("Failed to get memory requests: %v", err)
+				// 	return
+				// }
 
 				glog.V(3).Infof("CPU Limit: %s", strconv.FormatInt(cpuLimit, 10))
 				glog.V(3).Infof("Memory Limit: %s", strconv.FormatInt(memoryLimit, 10))
@@ -201,7 +212,7 @@ func update(clientset *kubernetes.Clientset) {
 
 				var computeCostPerHour float64 = 0.0475
 				var nodeCapacityMemory int64 = 3878510592
-				var nodeCapacityCpu int64 = 1
+				var nodeCapacityCpu int64 = 1000
 				var podUsageMemory int64 = memoryLimit
 				var podUsageCpu int64 = cpuLimit
 
