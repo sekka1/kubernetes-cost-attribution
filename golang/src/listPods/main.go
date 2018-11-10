@@ -213,6 +213,9 @@ func update(clientset *kubernetes.Clientset) {
 			// fmt.Println(k)
 			// fmt.Println(strconv.FormatFloat(ns, 'f', 6, 64))
 			namespaceCost.With(prometheus.Labels{"namespace_name": k, "duration": "minute"}).Set(ns)
+
+			// reset the counter to zero
+			namespaceCostMap[k] = 0
 		}
 
 		time.Sleep(60 * time.Second)
