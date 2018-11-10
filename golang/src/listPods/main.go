@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"math"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -15,7 +14,6 @@ import (
 
 	"github.com/golang/glog"
 	"k8s.io/api/core/v1"
-	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
@@ -118,6 +116,8 @@ func update(clientset *kubernetes.Clientset) {
 
 	namespaceCostMap := make(map[string]float64)
 
+	var nodeList nodeList
+
 	for {
 		nodes, err := getAllNodes(clientset)
 		if err != nil {
@@ -131,11 +131,21 @@ func update(clientset *kubernetes.Clientset) {
 			//PrettyPrint(n.Status.Capacity)
 			glog.V(3).Infof("Found nodes: %s/%s", n.Name, n.UID)
 
-			var nodeCpuCapacity int64 = n.Status.Capacity.Cpu().MilliValue()
-			var nodeMemoryCapcity int64 = n.Status.Capacity.Memory().Value()
+			var node nodeInfo
+			node.name = n.Name
+			node.cpuCapacity = n.Status.Capacity.Cpu().MilliValue()
+			node.memoryCapacity = n.Status.Capacity.Memory().Value()
+			node.computeCostPerHour = 0.0475
 
-			glog.V(3).Infof("Node CPU Capacity: %s", strconv.FormatInt(nodeCpuCapacity, 10))
-			glog.V(3).Infof("Node Memory Capacity: %s", strconv.FormatInt(nodeMemoryCapcity, 10))
+			glog.V(3).Infof("Node CPU Capacity: %s", strconv.FormatInt(node.cpuCapacity, 10))
+			glog.V(3).Infof("Node Memory Capacity: %s", strconv.FormatInt(node.memoryCapacity, 10))
+
+			nodeList.node = append(nodeList.node, node)
+		}
+
+		fmt.Println("nodeList.node")
+		for _, n := range nodeList.node {
+			fmt.Println(n)
 		}
 
 		pods, err := getAllPods(clientset)
@@ -175,15 +185,16 @@ func update(clientset *kubernetes.Clientset) {
 
 					//fmt.Println(reflect.TypeOf(cpuLimit))
 
-					nodeInfo := getNodeInfo(nodes, p.Spec.NodeName)
+					nodeInfo, err := getNodeInfo(nodeList, p.Spec.NodeName)
+					if err != nil {
+						glog.Errorf("Failed to retrieve nodes: %v", err)
+						return
+					}
 
-					var computeCostPerHour float64 = 0.0475
-					var nodeCapacityMemory int64 = nodeInfo.memoryCapacity
-					var nodeCapacityCpu int64 = nodeInfo.cpuCapacity
 					var podUsageMemory int64 = memoryLimit
 					var podUsageCpu int64 = cpuLimit
 
-					cost := calculatePodCost(computeCostPerHour, nodeCapacityMemory, nodeCapacityCpu, podUsageMemory, podUsageCpu)
+					cost := calculatePodCost(nodeInfo, podUsageMemory, podUsageCpu)
 
 					podCostMetric.With(prometheus.Labels{"namespace_name": p.Namespace, "pod_name": p.Name, "duration": "minute"}).Set(cost.minuteCpu + cost.minuteMemory)
 
@@ -208,29 +219,29 @@ func update(clientset *kubernetes.Clientset) {
 	}
 }
 
-// https://github.com/kubernetes/kubernetes/blob/master/pkg/api/resource/helpers.go
-// convertResourceCPUToInt converts cpu value to the format of divisor and returns
-// ceiling of the value.
-func convertResourceCPUToInt(cpu *resource.Quantity, divisor resource.Quantity) (int64, error) {
-	c := int64(math.Ceil(float64(cpu.MilliValue()) / float64(divisor.MilliValue())))
-	//b := float64(math.Ceil(float64(cpu.Value()) / float64(divisor.Value())))
-	fmt.Println(cpu.MilliValue())
-	return c, nil
-}
-
-// convertResourceMemoryToInt converts memory value to the format of divisor and returns
-// ceiling of the value.
-func convertResourceMemoryToInt(memory *resource.Quantity, divisor resource.Quantity) (int64, error) {
-	m := int64(math.Ceil(float64(memory.Value()) / float64(divisor.Value())))
-	return m, nil
-}
-
-// convertResourceEphemeralStorageToInt converts ephemeral storage value to the format of divisor and returns
-// ceiling of the value.
-func convertResourceEphemeralStorageToInt(ephemeralStorage *resource.Quantity, divisor resource.Quantity) (int64, error) {
-	m := int64(math.Ceil(float64(ephemeralStorage.Value()) / float64(divisor.Value())))
-	return m, nil
-}
+// // https://github.com/kubernetes/kubernetes/blob/master/pkg/api/resource/helpers.go
+// // convertResourceCPUToInt converts cpu value to the format of divisor and returns
+// // ceiling of the value.
+// func convertResourceCPUToInt(cpu *resource.Quantity, divisor resource.Quantity) (int64, error) {
+// 	c := int64(math.Ceil(float64(cpu.MilliValue()) / float64(divisor.MilliValue())))
+// 	//b := float64(math.Ceil(float64(cpu.Value()) / float64(divisor.Value())))
+// 	fmt.Println(cpu.MilliValue())
+// 	return c, nil
+// }
+//
+// // convertResourceMemoryToInt converts memory value to the format of divisor and returns
+// // ceiling of the value.
+// func convertResourceMemoryToInt(memory *resource.Quantity, divisor resource.Quantity) (int64, error) {
+// 	m := int64(math.Ceil(float64(memory.Value()) / float64(divisor.Value())))
+// 	return m, nil
+// }
+//
+// // convertResourceEphemeralStorageToInt converts ephemeral storage value to the format of divisor and returns
+// // ceiling of the value.
+// func convertResourceEphemeralStorageToInt(ephemeralStorage *resource.Quantity, divisor resource.Quantity) (int64, error) {
+// 	m := int64(math.Ceil(float64(ephemeralStorage.Value()) / float64(divisor.Value())))
+// 	return m, nil
+// }
 
 func recordMetrics() {
 	go func() {
@@ -262,19 +273,19 @@ type nodeInfo struct {
 	computeCostPerHour float64
 }
 
-type nodeInfoList struct {
-	nodeInfo []nodeInfo
+type nodeList struct {
+	node []nodeInfo
 }
 
-func calculatePodCost(computeCostPerHour float64, nodeCapacityMemory int64, nodeCapacityCpu int64, podUsageMemory int64, podUsageCpu int64) podCost {
+func calculatePodCost(node nodeInfo, podUsageMemory int64, podUsageCpu int64) podCost {
 
 	cost := podCost{}
 
-	computeCostPerHourMemory := computeCostPerHour * 0.5
-	computeCostPerHourCpu := computeCostPerHour * 0.5
+	computeCostPerHourMemory := node.computeCostPerHour * 0.5
+	computeCostPerHourCpu := node.computeCostPerHour * 0.5
 
-	percentUsedMemory := float64(podUsageMemory) / float64(nodeCapacityMemory)
-	percentUsedCpu := float64(podUsageCpu) / float64(nodeCapacityCpu)
+	percentUsedMemory := float64(podUsageMemory) / float64(node.memoryCapacity)
+	percentUsedCpu := float64(podUsageCpu) / float64(node.cpuCapacity)
 
 	cost.hourMemory = computeCostPerHourMemory * float64(percentUsedMemory)
 	cost.hourCpu = computeCostPerHourCpu * float64(percentUsedCpu)
@@ -303,19 +314,17 @@ func calculatePodCost(computeCostPerHour float64, nodeCapacityMemory int64, node
 	return cost
 }
 
-func getNodeInfo(nodes *v1.NodeList, nodeName string) nodeInfo {
+func getNodeInfo(nodes nodeList, nodeName string) (nodeInfo, error) {
 
 	info := nodeInfo{}
 
-	for _, n := range nodes.Items {
-		if n.Name == nodeName {
-			info.name = n.Name
-			info.cpuCapacity = n.Status.Capacity.Cpu().MilliValue()
-			info.memoryCapacity = n.Status.Capacity.Memory().Value()
+	for _, n := range nodes.node {
+		if n.name == nodeName {
+			info = n
 		}
 	}
 
-	return info
+	return info, nil
 }
 
 var (
