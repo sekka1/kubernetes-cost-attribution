@@ -1,0 +1,77 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.namePrefix }}-mk-agent
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.namePrefix }}-mk-agent
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.namePrefix }}-mk-agent
+    spec:
+      {{ if .Values.enableRBAC }}
+      serviceAccountName: {{ .Values.namePrefix }}-kube-state-metric
+      {{ end }}
+      {{ if .Values.enableRBACGoogleMarketPlace }}
+      serviceAccountName: {{ .Values.controller.serviceAccount }}
+      {{ end }}
+      containers:
+        - name: mk-agent
+          image: "{{ .Values.mkAgent.image.repository }}:{{ .Values.mkAgent.image.tag }}"
+          imagePullPolicy: "{{ .Values.mkAgent.image.pullPolicy }}"
+          # env:
+          # - name: GF_AUTH_BASIC_ENABLED
+          #   value: "true"
+          ports:
+          - name: web
+            containerPort: 9101
+          resources:
+            limits:
+              cpu: {{ .Values.mkAgent.resources.limits.cpu }}
+              memory: {{ .Values.mkAgent.resources.limits.memory }}
+            requests:
+              cpu: {{ .Values.mkAgent.resources.requests.cpu }}
+              memory: {{ .Values.mkAgent.resources.requests.memory }}
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /metrics
+              port: 9101
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 5
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /metrics
+              port: 9101
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.namePrefix }}-mk-agent
+  name: {{ .Values.namePrefix }}-mk-agent
+  namespace: {{ .Values.namespace }}
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '9101'
+spec:
+  selector:
+    app: {{ .Values.namePrefix }}-mk-agent
+  ports:
+  - name: web
+    port: 9101

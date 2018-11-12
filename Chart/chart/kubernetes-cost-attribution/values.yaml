@@ -89,3 +89,16 @@ grafana:
     annotations:
       enable: false
       whitelistSourceRange: "1.1.1.1/32,2.2.2.2/32"
+
+mkAgent:
+  image:
+    repository: gcr.io/managedkube/kubernetes-cost-attribution/agent
+    tag: "0.1"
+    pullPolicy: Always
+  resources:
+    limits:
+      cpu: 500m
+      memory: 500Mi
+    requests:
+      cpu: 20m
+      memory: 20Mi
