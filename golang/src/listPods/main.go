@@ -115,10 +115,11 @@ func update(clientset *kubernetes.Clientset) {
 	// divisor = resource.MustParse("1")
 
 	namespaceCostMap := make(map[string]float64)
-
 	var nodeList nodeList
+	var podMetricList podMetricList
 
 	for {
+
 		nodes, err := getAllNodes(clientset)
 		if err != nil {
 			glog.Errorf("Failed to retrieve nodes: %v", err)
@@ -152,6 +153,13 @@ func update(clientset *kubernetes.Clientset) {
 		if err != nil {
 			glog.Errorf("Failed to retrieve pods: %v", err)
 			return
+		}
+
+		// Reset pod metrics counters
+		// Would prefer to remove the metrics when it goes to zero.  Havent found a way to do that with
+		// the prometheus libs
+		for _, p := range podMetricList.pod {
+			podCostMetric.With(prometheus.Labels{"namespace_name": p.namespace_name, "pod_name": p.pod_name, "container_name": p.container_name, "duration": p.duration}).Set(0)
 		}
 
 		for _, p := range pods.Items {
@@ -196,7 +204,15 @@ func update(clientset *kubernetes.Clientset) {
 
 					cost := calculatePodCost(nodeInfo, podUsageMemory, podUsageCpu)
 
-					podCostMetric.With(prometheus.Labels{"namespace_name": p.Namespace, "pod_name": p.Name, "duration": "minute"}).Set(cost.minuteCpu + cost.minuteMemory)
+					podCostMetric.With(prometheus.Labels{"namespace_name": p.Namespace, "pod_name": p.Name, "container_name": c.Name, "duration": "minute"}).Set(cost.minuteCpu + cost.minuteMemory)
+
+					var metric podMetric
+					metric.namespace_name = p.Namespace
+					metric.pod_name = p.Name
+					metric.container_name = c.Name
+					metric.duration = "minute"
+
+					podMetricList.pod = append(podMetricList.pod, metric)
 
 					// Add this pod to the total
 					namespaceCostMap[p.Namespace] += cost.minuteCpu + cost.minuteMemory
@@ -214,7 +230,7 @@ func update(clientset *kubernetes.Clientset) {
 			// fmt.Println(strconv.FormatFloat(ns, 'f', 6, 64))
 			namespaceCost.With(prometheus.Labels{"namespace_name": k, "duration": "minute"}).Set(ns)
 
-			// reset the counter to zero
+			// reset counter
 			namespaceCostMap[k] = 0
 		}
 
@@ -278,6 +294,17 @@ type nodeInfo struct {
 
 type nodeList struct {
 	node []nodeInfo
+}
+
+type podMetric struct {
+	namespace_name string
+	pod_name       string
+	container_name string
+	duration       string
+}
+
+type podMetricList struct {
+	pod []podMetric
 }
 
 func calculatePodCost(node nodeInfo, podUsageMemory int64, podUsageCpu int64) podCost {
@@ -351,7 +378,7 @@ var (
 		Name: "mk_pod_cost",
 		Help: "ManagedKube - The cost of the pod.",
 	},
-		[]string{"pod_name", "namespace_name", "duration"},
+		[]string{"namespace_name", "pod_name", "container_name", "duration"},
 	)
 	totalNumberOfPods = prometheus.NewGaugeVec(prometheus.GaugeOpts{
 		Name: "mk_total_number_of_pods",
