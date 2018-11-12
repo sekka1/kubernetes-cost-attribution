@@ -159,7 +159,10 @@ func update(clientset *kubernetes.Clientset) {
 		// Would prefer to remove the metrics when it goes to zero.  Havent found a way to do that with
 		// the prometheus libs
 		for _, p := range podMetricList.pod {
-			podCostMetric.With(prometheus.Labels{"namespace_name": p.namespace_name, "pod_name": p.pod_name, "container_name": p.container_name, "duration": p.duration}).Set(0)
+			podCostMetric.With(prometheus.Labels{"namespace_name": p.namespace_name, "pod_name": p.pod_name, "container_name": p.container_name, "duration": "minute"}).Set(0)
+			podCostMetric.With(prometheus.Labels{"namespace_name": p.namespace_name, "pod_name": p.pod_name, "container_name": p.container_name, "duration": "hour"}).Set(0)
+			podCostMetric.With(prometheus.Labels{"namespace_name": p.namespace_name, "pod_name": p.pod_name, "container_name": p.container_name, "duration": "day"}).Set(0)
+			podCostMetric.With(prometheus.Labels{"namespace_name": p.namespace_name, "pod_name": p.pod_name, "container_name": p.container_name, "duration": "month"}).Set(0)
 		}
 
 		for _, p := range pods.Items {
@@ -205,12 +208,14 @@ func update(clientset *kubernetes.Clientset) {
 					cost := calculatePodCost(nodeInfo, podUsageMemory, podUsageCpu)
 
 					podCostMetric.With(prometheus.Labels{"namespace_name": p.Namespace, "pod_name": p.Name, "container_name": c.Name, "duration": "minute"}).Set(cost.minuteCpu + cost.minuteMemory)
+					podCostMetric.With(prometheus.Labels{"namespace_name": p.Namespace, "pod_name": p.Name, "container_name": c.Name, "duration": "hour"}).Set(cost.hourCpu + cost.hourMemory)
+					podCostMetric.With(prometheus.Labels{"namespace_name": p.Namespace, "pod_name": p.Name, "container_name": c.Name, "duration": "day"}).Set(cost.dayCpu + cost.dayMemory)
+					podCostMetric.With(prometheus.Labels{"namespace_name": p.Namespace, "pod_name": p.Name, "container_name": c.Name, "duration": "month"}).Set(cost.monthCpu + cost.monthMemory)
 
 					var metric podMetric
 					metric.namespace_name = p.Namespace
 					metric.pod_name = p.Name
 					metric.container_name = c.Name
-					metric.duration = "minute"
 
 					podMetricList.pod = append(podMetricList.pod, metric)
 
