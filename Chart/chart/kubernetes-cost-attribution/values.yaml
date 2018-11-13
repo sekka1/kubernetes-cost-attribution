@@ -7,7 +7,7 @@ createNamespace: true
 namespace: kubernetes-cost-attribution
 
 enableRBAC: false
-enableRBACGoogleMarketPlace: true
+enableRBACGoogleMarketPlace: false
 
 reportingSecret: test-secret
 
