@@ -57,10 +57,10 @@ spec:
           periodSeconds: 10
           successThreshold: 1
           timeoutSeconds: 5
-      {{ if .Values.billing.ubbAgent.enable }}
+      {{ if .Values.enableRBACGoogleMarketPlace }}
       - name: ubbagent
-        image: "{{ .Values.billing.ubbAgent.image.repository }}:{{ .Values.billing.ubbAgent.image.tag }}"
-        imagePullPolicy: "{{ .Values.billing.ubbAgent.image.pullPolicy }}"
+        image: "{{ .Values.mkAgent.ubbAgent.image.repository }}:{{ .Values.mkAgent.ubbAgent.image.tag }}"
+        imagePullPolicy: "{{ .Values.mkAgent.ubbAgent.image.pullPolicy }}"
         env:
           - name: AGENT_CONFIG_FILE
             value: "/etc/ubbagent/config.yaml"
@@ -90,11 +90,11 @@ spec:
                 key: consumer-id
         resources:
           limits:
-            cpu: {{ .Values.billing.ubbAgent.resources.limits.cpu }}
-            memory: {{ .Values.billing.ubbAgent.resources.limits.memory }}
+            cpu: {{ .Values.mkAgent.ubbAgent.resources.limits.cpu }}
+            memory: {{ .Values.mkAgent.ubbAgent.resources.limits.memory }}
           requests:
-            cpu: {{ .Values.billing.ubbAgent.resources.requests.cpu }}
-            memory: {{ .Values.billing.ubbAgent.resources.requests.memory }}
+            cpu: {{ .Values.mkAgent.ubbAgent.resources.requests.cpu }}
+            memory: {{ .Values.mkAgent.ubbAgent.resources.requests.memory }}
         volumeMounts:
         - name: ubbagent-config
           mountPath: /etc/ubbagent
@@ -102,7 +102,7 @@ spec:
           mountPath: "/var/lib/ubbagent"
       {{ end }}
       volumes:
-      {{ if .Values.billing.ubbAgent.enable }}
+      {{ if .Values.enableRBACGoogleMarketPlace }}
       - name: ubbagent-config
         configMap:
           name: {{ .Values.namePrefix }}-ubbagent-config

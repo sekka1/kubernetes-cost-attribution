@@ -1,4 +1,4 @@
-{{ if .Values.billing.ubbAgent.enable }}
+{{ if .Values.enableRBACGoogleMarketPlace }}
 ---
 apiVersion: v1
 kind: ConfigMap
