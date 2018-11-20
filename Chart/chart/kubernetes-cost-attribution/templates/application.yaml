@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/name: "{{ .Release.Name }}"
 spec:
   info:
-    - name: Kubernetes Cost Attribution External IP
+    - name: Managed-Kube External IP
       type: Reference
       valueFrom:
         serviceRef:
@@ -25,11 +25,10 @@ spec:
       type: String
       value: {{ .Values.grafana.credentials.password }}
   descriptor:
-    type: Kubernetes-Cost-Attribution
+    type: ManagedKube
     versions: '1'
     description: |-
-      Kubernetes Cost Attribution helps you visualize the cost of each Namespace
-      in your Kubernetes cluster.
+      ManagedKube’s Kubernetes Cost Attribution is an application to help you understand the cost of your Kubernetes clusters, from what each namespace or pod costs to how much disks or network traffic in the cluster costs, so you can manage your budget and optimize your cloud spend.
 
       # Support
       Feel free to contact us with any questions or comments that you have.
@@ -40,7 +39,7 @@ spec:
       url: https://www.managedkube.com
     links:
     - description: 'Product Description'
-      url: https://managedkube.com/kubernetes-cost-attribution
+      url: https://managedkube.com
     notes: |-
       # Access to the dashboard
 
