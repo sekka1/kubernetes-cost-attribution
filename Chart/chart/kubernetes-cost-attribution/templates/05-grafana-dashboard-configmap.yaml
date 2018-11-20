@@ -28,6 +28,295 @@ data:
       "links": [],
       "panels": [
         {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "prometheus",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "id": 20,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "$$hashKey": "object:1856",
+              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[1h])) by (namespace_name)",
+              "format": "time_series",
+              "instant": false,
+              "interval": "",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": "30d",
+          "timeShift": null,
+          "title": "Cost: Last 30 Days",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "prometheus",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          "id": 21,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "$$hashKey": "object:1856",
+              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[1h])) by (namespace_name)",
+              "format": "time_series",
+              "interval": "",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": "24h",
+          "timeShift": null,
+          "title": "Cost: Last 24 Hours",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "columns": [],
+          "datasource": "prometheus",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 9
+          },
+          "hideTimeOverride": false,
+          "id": 17,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "$$hashKey": "object:1360",
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "date"
+            },
+            {
+              "$$hashKey": "object:1361",
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "$$hashKey": "object:489",
+              "expr": "sum(mk_pod_cost{duration=\"minute\"}) by (namespace_name)",
+              "format": "table",
+              "instant": true,
+              "interval": "",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "30d",
+          "title": "Cost: Last 30 Days",
+          "transform": "table",
+          "type": "table"
+        },
+        {
+          "columns": [],
+          "datasource": "prometheus",
+          "fontSize": "100%",
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 9
+          },
+          "id": 18,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "styles": [
+            {
+              "$$hashKey": "object:994",
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "date"
+            },
+            {
+              "$$hashKey": "object:995",
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "decimals": 2,
+              "pattern": "/.*/",
+              "thresholds": [],
+              "type": "number",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "$$hashKey": "object:489",
+              "expr": "sum(mk_pod_cost{duration=\"minute\"}) by (namespace_name)",
+              "format": "table",
+              "interval": "24h",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "timeFrom": "24h",
+          "title": "Cost: Last 24 Hours",
+          "transform": "table",
+          "type": "table"
+        },
+        {
           "cacheTimeout": null,
           "colorBackground": false,
           "colorValue": false,
@@ -37,7 +326,7 @@ data:
             "#d44a3a"
           ],
           "datasource": "prometheus",
-          "decimals": 4,
+          "decimals": 2,
           "format": "currencyUSD",
           "gauge": {
             "maxValue": 100,
@@ -47,12 +336,12 @@ data:
             "thresholdMarkers": true
           },
           "gridPos": {
-            "h": 2,
+            "h": 5,
             "w": 12,
             "x": 0,
-            "y": 0
+            "y": 18
           },
-          "id": 9,
+          "id": 22,
           "interval": null,
           "links": [],
           "mappingType": 1,
@@ -86,13 +375,13 @@ data:
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
-          "tableColumn": "",
+          "tableColumn": "Value",
           "targets": [
             {
-              "$$hashKey": "object:188",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[30d]))",
+              "$$hashKey": "object:809",
+              "expr": "sum(mk_pod_cost{duration=\"minute\"})",
               "format": "time_series",
-              "interval": "1d",
+              "instant": true,
               "intervalFactor": 1,
               "refId": "A"
             }
@@ -109,7 +398,7 @@ data:
               "value": "null"
             }
           ],
-          "valueName": "avg"
+          "valueName": "max"
         },
         {
           "cacheTimeout": null,
@@ -121,7 +410,7 @@ data:
             "#d44a3a"
           ],
           "datasource": "prometheus",
-          "decimals": 4,
+          "decimals": 2,
           "format": "currencyUSD",
           "gauge": {
             "maxValue": 100,
@@ -131,12 +420,12 @@ data:
             "thresholdMarkers": true
           },
           "gridPos": {
-            "h": 2,
+            "h": 5,
             "w": 12,
             "x": 12,
-            "y": 0
+            "y": 18
           },
-          "id": 10,
+          "id": 14,
           "interval": null,
           "links": [],
           "mappingType": 1,
@@ -170,13 +459,13 @@ data:
             "lineColor": "rgb(31, 120, 193)",
             "show": false
           },
-          "tableColumn": "",
+          "tableColumn": "Value",
           "targets": [
             {
-              "$$hashKey": "object:236",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[24h]))",
+              "$$hashKey": "object:809",
+              "expr": "sum(mk_pod_cost{duration=\"minute\"})",
               "format": "time_series",
-              "interval": "24h",
+              "instant": true,
               "intervalFactor": 1,
               "refId": "A"
             }
@@ -193,297 +482,7 @@ data:
               "value": "null"
             }
           ],
-          "valueName": "avg"
-        },
-        {
-          "columns": [],
-          "datasource": "prometheus",
-          "fontSize": "100%",
-          "gridPos": {
-            "h": 10,
-            "w": 12,
-            "x": 0,
-            "y": 2
-          },
-          "id": 6,
-          "links": [],
-          "pageSize": null,
-          "scroll": true,
-          "showHeader": true,
-          "sort": {
-            "col": 1,
-            "desc": true
-          },
-          "styles": [
-            {
-              "alias": "Time",
-              "dateFormat": "MMMM D, YYYY LT",
-              "link": false,
-              "pattern": "Time",
-              "type": "date"
-            },
-            {
-              "alias": "",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "decimals": 2,
-              "pattern": "/.*/",
-              "thresholds": [],
-              "type": "number",
-              "unit": "short"
-            }
-          ],
-          "targets": [
-            {
-              "$$hashKey": "object:284",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[30d])) by (namespace_name)",
-              "format": "table",
-              "interval": "30d",
-              "intervalFactor": 1,
-              "refId": "A"
-            }
-          ],
-          "timeFrom": "30d",
-          "title": "Cost: Last 30 Days",
-          "transform": "table",
-          "type": "table"
-        },
-        {
-          "columns": [],
-          "datasource": "prometheus",
-          "fontSize": "100%",
-          "gridPos": {
-            "h": 10,
-            "w": 12,
-            "x": 12,
-            "y": 2
-          },
-          "hideTimeOverride": false,
-          "id": 4,
-          "links": [],
-          "pageSize": null,
-          "scroll": true,
-          "showHeader": true,
-          "sort": {
-            "col": 1,
-            "desc": true
-          },
-          "styles": [
-            {
-              "alias": "Time",
-              "dateFormat": "MMMM D, YYYY LT",
-              "pattern": "Time",
-              "type": "date"
-            },
-            {
-              "alias": "",
-              "colorMode": null,
-              "colors": [
-                "rgba(245, 54, 54, 0.9)",
-                "rgba(237, 129, 40, 0.89)",
-                "rgba(50, 172, 45, 0.97)"
-              ],
-              "decimals": 2,
-              "pattern": "/.*/",
-              "thresholds": [],
-              "type": "number",
-              "unit": "short"
-            }
-          ],
-          "targets": [
-            {
-              "$$hashKey": "object:346",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[24h])) by (namespace_name)",
-              "format": "table",
-              "interval": "24h",
-              "intervalFactor": 1,
-              "refId": "A"
-            }
-          ],
-          "timeFrom": "24h",
-          "title": "Cost: Last 24 Hours",
-          "transform": "table",
-          "transparent": false,
-          "type": "table"
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "prometheus",
-          "decimals": 4,
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 12
-          },
-          "id": 2,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "$$hashKey": "object:421",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[1d])) by (namespace_name)",
-              "format": "time_series",
-              "interval": "1d",
-              "intervalFactor": 1,
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": "30d",
-          "timeShift": null,
-          "title": "Cost: Last 30 Days",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "decimals": 2,
-              "format": "currencyUSD",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "prometheus",
-          "decimals": 4,
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 12
-          },
-          "id": 7,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "$$hashKey": "object:489",
-              "expr": "sum(increase(kubernetes_cost_attribution{}[1h])) by (namespace_name)",
-              "format": "time_series",
-              "interval": "1h",
-              "intervalFactor": 1,
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": "24h",
-          "timeShift": null,
-          "title": "Cost: Last 24 Hours",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "decimals": 2,
-              "format": "currencyUSD",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "valueName": "max"
         },
         {
           "content": "# Contact Us\nFeel free to contact us with any questions or comments.  We would love to hear from you.\n\nsupport@managedkube.com\n",
@@ -491,7 +490,7 @@ data:
             "h": 4,
             "w": 24,
             "x": 0,
-            "y": 21
+            "y": 23
           },
           "id": 12,
           "mode": "markdown",
@@ -506,7 +505,7 @@ data:
         "list": []
       },
       "time": {
-        "from": "now-30d",
+        "from": "now-1h",
         "to": "now"
       },
       "timepicker": {
@@ -535,7 +534,7 @@ data:
         ]
       },
       "timezone": "",
-      "title": "ManagedKube - Kubernetes Cost Attribution",
+      "title": "MangedKube - Kubernetes Cost Attribution",
       "uid": "egpS4U2mz",
-      "version": 1
+      "version": 2
     }
