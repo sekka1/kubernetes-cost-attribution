@@ -21,43 +21,94 @@ spec:
       serviceAccountName: {{ .Values.controller.serviceAccount }}
       {{ end }}
       containers:
-        - name: mk-agent
-          image: "{{ .Values.mkAgent.image.repository }}:{{ .Values.mkAgent.image.tag }}"
-          imagePullPolicy: "{{ .Values.mkAgent.image.pullPolicy }}"
-          # env:
-          # - name: GF_AUTH_BASIC_ENABLED
-          #   value: "true"
-          ports:
-          - name: web
-            containerPort: 9101
-          resources:
-            limits:
-              cpu: {{ .Values.mkAgent.resources.limits.cpu }}
-              memory: {{ .Values.mkAgent.resources.limits.memory }}
-            requests:
-              cpu: {{ .Values.mkAgent.resources.requests.cpu }}
-              memory: {{ .Values.mkAgent.resources.requests.memory }}
-          readinessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /metrics
-              port: 9101
-              scheme: HTTP
-            initialDelaySeconds: 5
-            periodSeconds: 5
-            successThreshold: 1
-            timeoutSeconds: 5
-          livenessProbe:
-            failureThreshold: 3
-            httpGet:
-              path: /metrics
-              port: 9101
-              scheme: HTTP
-            initialDelaySeconds: 5
-            periodSeconds: 10
-            successThreshold: 1
-            timeoutSeconds: 5
-
+      - name: mk-agent
+        image: "{{ .Values.mkAgent.image.repository }}:{{ .Values.mkAgent.image.tag }}"
+        imagePullPolicy: "{{ .Values.mkAgent.image.pullPolicy }}"
+        # env:
+        # - name: GF_AUTH_BASIC_ENABLED
+        #   value: "true"
+        ports:
+        - name: web
+          containerPort: 9101
+        resources:
+          limits:
+            cpu: {{ .Values.mkAgent.resources.limits.cpu }}
+            memory: {{ .Values.mkAgent.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.mkAgent.resources.requests.cpu }}
+            memory: {{ .Values.mkAgent.resources.requests.memory }}
+        readinessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /metrics
+            port: 9101
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /metrics
+            port: 9101
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+      {{ if .Values.enableRBACGoogleMarketPlace }}
+      - name: ubbagent
+        image: "{{ .Values.mkAgent.ubbAgent.image.repository }}:{{ .Values.mkAgent.ubbAgent.image.tag }}"
+        imagePullPolicy: "{{ .Values.mkAgent.ubbAgent.image.pullPolicy }}"
+        env:
+          - name: AGENT_CONFIG_FILE
+            value: "/etc/ubbagent/config.yaml"
+          - name: AGENT_LOCAL_PORT
+            value: "4567"
+          - name: AGENT_STATE_DIR
+            value: "/var/lib/ubbagent"
+          - name: ENTITLEMENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.reportingSecret }}
+                key: entitlement-id
+          - name: CUNSUMER_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.reportingSecret }}
+                key: consumer-id
+          - name: REPORTING_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.reportingSecret }}
+                key: reporting-key
+          - name: AGENT_CONSUMER_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.reportingSecret }}
+                key: consumer-id
+        resources:
+          limits:
+            cpu: {{ .Values.mkAgent.ubbAgent.resources.limits.cpu }}
+            memory: {{ .Values.mkAgent.ubbAgent.resources.limits.memory }}
+          requests:
+            cpu: {{ .Values.mkAgent.ubbAgent.resources.requests.cpu }}
+            memory: {{ .Values.mkAgent.ubbAgent.resources.requests.memory }}
+        volumeMounts:
+        - name: ubbagent-config
+          mountPath: /etc/ubbagent
+        - name: ubbagent-state
+          mountPath: "/var/lib/ubbagent"
+      {{ end }}
+      volumes:
+      {{ if .Values.enableRBACGoogleMarketPlace }}
+      - name: ubbagent-config
+        configMap:
+          name: {{ .Values.namePrefix }}-ubbagent-config
+      {{ end }}
+      - name: ubbagent-state
+        emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

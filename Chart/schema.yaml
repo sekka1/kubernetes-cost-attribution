@@ -31,16 +31,16 @@ properties:
       type: GENERATED_PASSWORD
       generatedPassword:
         length: 32
-  billingImage:
+  AgentImage:
     type: string
-    default: gcr.io/managedkube/kubernetes-cost-attribution:1.0
+    default: gcr.io/managedkube/kubernetes-cost-attribution/agent:1.0
     x-google-marketplace:
       type: IMAGE
       image:
         generatedProperties:
           splitByColon:
-            before: billing.image.repository
-            after: billing.image.tag
+            before: mkAgent.image.repository
+            after: mkAgent.image.tag
   ubbAgentImage:
     type: string
     default: gcr.io/managedkube/kubernetes-cost-attribution/ubbagent:1.0
@@ -49,18 +49,8 @@ properties:
       image:
         generatedProperties:
           splitByColon:
-            before: billing.ubbAgent.image.repository
-            after: billing.ubbAgent.image.tag
-  kubeStateMetricsImage:
-    type: string
-    default: gcr.io/managedkube/kubernetes-cost-attribution/kube-state-metrics:1.0
-    x-google-marketplace:
-      type: IMAGE
-      image:
-        generatedProperties:
-          splitByColon:
-            before: kubeStateMetrics.image.repository
-            after: kubeStateMetrics.image.tag
+            before: mkAgent.ubbAgent.image.repository
+            after: mkAgent.ubbAgent.image.tag
   prometheusImage:
     type: string
     default: gcr.io/managedkube/kubernetes-cost-attribution/prometheus:1.0
