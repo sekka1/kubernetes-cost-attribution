@@ -41,6 +41,16 @@ properties:
           splitByColon:
             before: billing.image.repository
             after: billing.image.tag
+  AgentImage:
+    type: string
+    default: gcr.io/managedkube/kubernetes-cost-attribution/agent:1.0
+    x-google-marketplace:
+      type: IMAGE
+      image:
+        generatedProperties:
+          splitByColon:
+            before: mkAgent.image.repository
+            after: mkAgent.image.tag
   ubbAgentImage:
     type: string
     default: gcr.io/managedkube/kubernetes-cost-attribution/ubbagent:1.0
