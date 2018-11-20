@@ -18,6 +18,8 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
+
+	"pkg/cost"
 )
 
 // optional - local kubeconfig for testing
@@ -29,6 +31,8 @@ func main() {
 	flag.Set("logtostderr", "true")
 	flag.Set("v", "3")
 	flag.Parse()
+
+	cost.Hello()
 
 	config, err := getConfig(*kubeconfig)
 	if err != nil {

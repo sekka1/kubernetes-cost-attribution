@@ -6,6 +6,9 @@ from src import billing
 from src import logger_config
 from prometheus_client import start_http_server, Gauge, Counter
 import schedule
+import rook
+
+rook.start(token='babfa4263f8d4041e74885b4c340f3e30377378752f50dfcfd5b48e61fd39ff2')
 
 logger = logger_config.logger
 
