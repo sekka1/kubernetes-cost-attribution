@@ -13,7 +13,7 @@ metadata:
     app.kubernetes.io/name: "{{ .Release.Name }}"
 spec:
   info:
-    - name: Kubernetes Cost Attribution External IP
+    - name: Managed-Kube External IP
       type: Reference
       valueFrom:
         serviceRef:
@@ -40,7 +40,7 @@ spec:
       url: https://www.managedkube.com
     links:
     - description: 'Product Description'
-      url: https://managedkube.com/kubernetes-cost-attribution
+      url: https://managedkube.com
     notes: |-
       # Access to the dashboard
 
