@@ -15,7 +15,7 @@ spec:
         app: {{ .Values.namePrefix }}-mk-agent
     spec:
       {{ if .Values.enableRBAC }}
-      serviceAccountName: {{ .Values.namePrefix }}-kube-state-metric
+      serviceAccountName: {{ .Values.namePrefix }}-prometheus
       {{ end }}
       {{ if .Values.enableRBACGoogleMarketPlace }}
       serviceAccountName: {{ .Values.controller.serviceAccount }}

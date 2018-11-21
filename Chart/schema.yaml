@@ -15,6 +15,11 @@ properties:
     title: Enable RBAC
     description: By default (true), it will use the GCP Marketplace auto generated service account for this application.
     default: true
+  enableRBAC:
+    type: boolean
+    title: Enable RBAC (set to false)
+    description: By default (false), this is used for non GKE Marketplace installs
+    default: false
   reportingSecret:
     type: string
     x-google-marketplace:

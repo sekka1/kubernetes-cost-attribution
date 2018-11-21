@@ -1,3 +1,4 @@
+{{ if .Values.enableRBACGoogleMarketPlace }}
 # example: https://github.com/GoogleCloudPlatform/click-to-deploy/blob/614cea698f6974eb1c5aaeaee714b4631a0f3eee/k8s/cassandra/manifest/application.yaml.template#L88
 # doc: https://github.com/kubernetes-sigs/application
 ---
@@ -67,3 +68,4 @@ spec:
     kind: Service
   - group: apps/v1beta2
     kind: StatefulSet
+{{ end }}

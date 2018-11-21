@@ -1,12 +1,10 @@
 ---
 namePrefix: cost-attribution
 
-enableGCEBillingAgent: true
-
 createNamespace: true
 namespace: kubernetes-cost-attribution
 
-enableRBAC: false
+enableRBAC: true
 enableRBACGoogleMarketPlace: false
 
 reportingSecret: test-secret
