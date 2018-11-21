@@ -16,11 +16,11 @@ prometheus:
     pullPolicy: Always
   resources:
     limits:
-      cpu: 4000m
-      memory: 4000Mi
+      cpu: 1000m
+      memory: 1000Mi
     requests:
-      cpu: 250m
-      memory: 250Mi
+      cpu: 200m
+      memory: 200Mi
   disk:
     size: 50Gi
   dataRetention: 60d
