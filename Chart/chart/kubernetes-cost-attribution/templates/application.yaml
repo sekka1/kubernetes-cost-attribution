@@ -44,19 +44,13 @@ spec:
     notes: |-
       # Access to the dashboard
 
-      In the Kubernetes Engines application page there is a field named
-      "Kubernetes Cost Attribution External IP".  This has the IP address
-      where you can reach the dashboard.
+      In the Kubernetes Engines application page there is a field named "Managed-Kube External IP". This has the IP address where you can reach the dashboard.
 
-      Note: If the IP address starts with a 10.x.x.x.  This means the external
-      load balancer has not been created yet.  Refresh the page in a few minutes
-      and it will have an external IP that you can reach.
+      Note: If the IP address starts with a 10.x.x.x, This means THAT the external load balancer has not been created yet. Refresh the page in a few minutes and it will have an external IP that you can reach.
 
       The log-in username and password are also in the same info area.
 
-      Once logged in, click on "Home" on the top left, and then the "Kubernetes Cost Attribution"
-      dashboard.  You will have to wait for a few moments before data starts to
-      come in.
+      Once logged in, click on "Home" on the top left, and then the "ManagedKube - Kubernetes Cost Attribution" dashboard. You will have to wait for a few moments before data starts to come in.
 
   selector:
     matchLabels:
