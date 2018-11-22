@@ -245,7 +245,7 @@ data:
           "targets": [
             {
               "$$hashKey": "object:489",
-              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[30d])) by (namespace_name)",
+              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[30d])) by (namespace_name) > 0",
               "format": "table",
               "instant": true,
               "interval": "",
@@ -304,7 +304,7 @@ data:
           "targets": [
             {
               "$$hashKey": "object:489",
-              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[24h])) by (namespace_name)",
+              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[24h])) by (namespace_name) > 0 ",
               "format": "table",
               "interval": "24h",
               "intervalFactor": 1,
@@ -379,7 +379,7 @@ data:
           "targets": [
             {
               "$$hashKey": "object:809",
-              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[30d]))",
+              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[30d])>0)",
               "format": "time_series",
               "instant": true,
               "interval": "",
@@ -464,7 +464,7 @@ data:
           "targets": [
             {
               "$$hashKey": "object:809",
-              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[24h]))",
+              "expr": "sum(increase(mk_pod_cost{duration=\"minute\"}[24h])>0)",
               "format": "time_series",
               "instant": true,
               "intervalFactor": 1,
