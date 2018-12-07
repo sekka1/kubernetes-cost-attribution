@@ -48,6 +48,7 @@ properties:
             after: mkAgent.image.tag
   ubbAgentImage:
     type: string
+    # Source: gcr.io/cloud-marketplace-tools/metering/ubbagent:latest
     default: gcr.io/managedkube/kubernetes-cost-attribution/ubbagent:1.0
     x-google-marketplace:
       type: IMAGE
